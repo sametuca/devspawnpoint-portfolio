@@ -1,10 +1,10 @@
 import { Monitor } from './Monitor'
 import { useGLTF, Text } from '@react-three/drei'
 import { Chair } from './Chair'
-import { useLoader } from '@react-three/fiber'
+import { useLoader, useFrame } from '@react-three/fiber'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import * as THREE from 'three'
-import { useMemo } from 'react'
+import { useMemo, useState, useRef } from 'react'
 
 export const Desk = () => {
 
@@ -13,6 +13,9 @@ export const Desk = () => {
 
     // Load Donald Duck model
     const { scene: donaldDuck } = useGLTF('/models/donalduck/donaldduck.gltf')
+
+    const [waterSpilling, setWaterSpilling] = useState(false)
+    const [waterDrops, setWaterDrops] = useState<Array<{id: number, y: number, x: number, z: number, speed: number}>>([])
 
 
 
@@ -30,6 +33,32 @@ export const Desk = () => {
         })
         return cloned
     }, [cupObj])
+
+    const handleCupClick = () => {
+        if (waterSpilling) return
+        setWaterSpilling(true)
+        const drops = Array.from({ length: 150 }, (_, i) => ({
+            id: Date.now() + i,
+            y: 0.85,
+            x: -0.8 + (Math.random() - 0.5) * 0.15,
+            z: 0.4 + (Math.random() - 0.5) * 0.15,
+            speed: 0.015 + Math.random() * 0.025
+        }))
+        setWaterDrops(drops)
+        setTimeout(() => {
+            setWaterSpilling(false)
+            setWaterDrops([])
+        }, 4000)
+    }
+
+    useFrame(() => {
+        if (waterDrops.length > 0) {
+            setWaterDrops(prev => prev.map(drop => ({
+                ...drop,
+                y: drop.y - drop.speed
+            })).filter(drop => drop.y > 0.7))
+        }
+    })
 
     return (
         <group position={[0, 0, 0]}>
@@ -185,12 +214,21 @@ export const Desk = () => {
             </group>
 
             {/* 3D Coffee Cup Model */}
-            <primitive
-                object={cupModel}
-                position={[-0.8, 0.75, 0.4]}
-                scale={0.08}
-                rotation={[0, 0.5, 0]}
-            />
+            <group onClick={(e) => { e.stopPropagation(); handleCupClick() }}>
+                <primitive
+                    object={cupModel}
+                    position={[-0.8, 0.75, 0.4]}
+                    scale={0.08}
+                    rotation={[0, 0.5, 0]}
+                />
+                {/* Water Drops */}
+                {waterDrops.map(drop => (
+                    <mesh key={drop.id} position={[drop.x, drop.y, drop.z]}>
+                        <sphereGeometry args={[0.025, 8, 8]} />
+                        <meshStandardMaterial color="#4fc3f7" transparent opacity={0.9} emissive="#4fc3f7" emissiveIntensity={0.5} />
+                    </mesh>
+                ))}
+            </group>
 
             {/* Donald Duck Figure */}
             <primitive

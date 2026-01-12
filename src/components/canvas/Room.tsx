@@ -1,9 +1,12 @@
 import * as THREE from 'three'
 import { useTexture, Text } from '@react-three/drei'
+import { useThree } from '@react-three/fiber'
+import { useState } from 'react'
 
 export const Room = () => {
     const wallMaterial = new THREE.MeshStandardMaterial({ color: "#e0e0e0", roughness: 0.8 })
     const [outdoorTexture, marioTexture] = useTexture(['/textures/outdoor.jpg', '/textures/supermario.jpg'])
+    const [lightsOn, setLightsOn] = useState(true)
 
     return (
         <group>
@@ -20,7 +23,7 @@ export const Room = () => {
             </mesh>
 
             {/* Ceiling Lamp / Chandelier */}
-            <group position={[0, 2.8, 0]}>
+            <group position={[0, 2.8, 0]} onClick={(e) => { e.stopPropagation(); setLightsOn(!lightsOn) }} style={{ cursor: 'pointer' }}>
                 <mesh position={[0, 0.1, 0]}>
                     <cylinderGeometry args={[0.08, 0.08, 0.1, 16]} />
                     <meshStandardMaterial color="#222" metalness={0.9} />
@@ -31,9 +34,9 @@ export const Room = () => {
                 </mesh>
                 <mesh position={[0, -0.45, 0]}>
                     <cylinderGeometry args={[0.15, 0.25, 0.3, 16]} />
-                    <meshStandardMaterial color="#f5f0e6" emissive="#ffe4b5" emissiveIntensity={0.3} />
+                    <meshStandardMaterial color="#f5f0e6" emissive={lightsOn ? "#ffe4b5" : "#000"} emissiveIntensity={lightsOn ? 0.3 : 0} />
                 </mesh>
-                <pointLight position={[0, -0.5, 0]} color="#ffe4b5" intensity={15} distance={5} decay={2} />
+                <pointLight position={[0, -0.5, 0]} color="#ffe4b5" intensity={lightsOn ? 15 : 0} distance={5} decay={2} />
             </group>
 
             {/* Back Wall (Whiteboard Side) */}
@@ -121,6 +124,10 @@ export const Room = () => {
                 <planeGeometry args={[6, 3]} />
                 <primitive object={wallMaterial} />
             </mesh>
+
+            {/* Global Ambient Light Control */}
+            <ambientLight intensity={lightsOn ? 0.5 : 0.05} color="#4a4a6adb" />
+            <pointLight position={[0, 2, 0]} intensity={lightsOn ? 1.0 : 0} color="#faa" distance={5} />
 
             {/* Left Wall (Window + TV + Gaming Area) */}
             <group position={[-3, 1.5, 0]} rotation={[0, Math.PI / 2, 0]}>
