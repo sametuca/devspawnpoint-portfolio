@@ -5,8 +5,8 @@ export const Scene = () => {
     return (
         <>
             {/* Base Lighting - Dim and Mood Setting */}
-            <ambientLight intensity={0.1} color="#4a4a6adb" />
-            <pointLight position={[0, 2, 0]} intensity={0.5} color="#faa" distance={5} />
+            <ambientLight intensity={0.5} color="#4a4a6adb" />
+            <pointLight position={[0, 2, 0]} intensity={1.0} color="#faa" distance={5} />
 
             {/* Subtle Environment reflections */}
             <Environment preset="city" environmentIntensity={0.2} />
