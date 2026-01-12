@@ -16,6 +16,10 @@ export const Desk = () => {
 
     const [waterSpilling, setWaterSpilling] = useState(false)
     const [waterDrops, setWaterDrops] = useState<Array<{id: number, y: number, x: number, z: number, speed: number}>>([])
+    const [santaFlying, setSantaFlying] = useState(false)
+    const [santaPosition, setSantaPosition] = useState(-4)
+
+    const { scene: santaModel } = useGLTF('/models/christimas/scene.gltf')
 
 
 
@@ -57,6 +61,15 @@ export const Desk = () => {
                 ...drop,
                 y: drop.y - drop.speed
             })).filter(drop => drop.y > 0.7))
+        }
+        if (santaFlying) {
+            setSantaPosition(prev => {
+                if (prev > 4) {
+                    setSantaFlying(false)
+                    return -4
+                }
+                return prev + 0.05
+            })
         }
     })
 
@@ -346,7 +359,7 @@ export const Desk = () => {
 
 
             {/* ===== CHRISTMAS TREE ===== */}
-            <group position={[-2.5, 0, -2.5]}>
+            <group position={[-2.5, 0, -2.5]} onClick={(e) => { e.stopPropagation(); setSantaFlying(true); setSantaPosition(-4) }}>
                 {/* Tree Pot */}
                 <mesh position={[0, 0.15, 0]}>
                     <cylinderGeometry args={[0.15, 0.12, 0.3, 8]} />
@@ -397,6 +410,11 @@ export const Desk = () => {
                     <meshStandardMaterial color="#00ffff" emissive="#00ffff" emissiveIntensity={0.3} />
                 </mesh>
             </group>
+
+            {/* Santa Flying */}
+            {santaFlying && (
+                <primitive object={santaModel.clone()} scale={0.015} position={[santaPosition, 1.5, 1.5]} rotation={[0, Math.PI / 2, 0]} />
+            )}
         </group>
     )
 }

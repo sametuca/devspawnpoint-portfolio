@@ -1,4 +1,5 @@
-import { useTexture } from '@react-three/drei'
+import { useTexture, useGLTF } from '@react-three/drei'
+import { useState } from 'react'
 
 export const InteractiveElements = () => {
     const posterTexture = useTexture('/textures/antigravity-poster.png')
@@ -59,6 +60,9 @@ export const InteractiveElements = () => {
                         <meshStandardMaterial color="#32CD32" />
                     </mesh>
                 </group>
+
+                {/* Christmas Tree */}
+                <ChristmasTree />
 
                 {/* Wall Clock */}
                 <group position={[0, 2, 0.05]}>
@@ -122,6 +126,31 @@ export const InteractiveElements = () => {
                 <planeGeometry args={[1.5, 2]} />
                 <meshStandardMaterial map={posterTexture} />
             </mesh>
+        </group>
+    )
+}
+
+function ChristmasTree() {
+    const [showSanta, setShowSanta] = useState(false)
+    const { scene } = useGLTF('/models/christimas/scene.gltf')
+    
+    return (
+        <group position={[-1.5, 0.125, 0]}>
+            <group onClick={(e) => { e.stopPropagation(); setShowSanta(!showSanta) }}>
+                <mesh position={[0, 0, 0]}>
+                    <cylinderGeometry args={[0.12, 0.1, 0.25, 12]} />
+                    <meshStandardMaterial color="#8B4513" />
+                </mesh>
+                <mesh position={[0, 0.5, 0]}>
+                    <coneGeometry args={[0.3, 0.8, 8]} />
+                    <meshStandardMaterial color="#0d5c0d" />
+                </mesh>
+                <mesh position={[0, 0.9, 0]}>
+                    <coneGeometry args={[0.25, 0.6, 8]} />
+                    <meshStandardMaterial color="#0d5c0d" />
+                </mesh>
+            </group>
+            {showSanta && <primitive object={scene.clone()} scale={0.015} position={[-1.5, 0.5, 0]} />}
         </group>
     )
 }

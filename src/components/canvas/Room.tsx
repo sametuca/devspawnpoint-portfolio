@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { useTexture, Text } from '@react-three/drei'
+import { useTexture, Text, useGLTF } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useState } from 'react'
 
