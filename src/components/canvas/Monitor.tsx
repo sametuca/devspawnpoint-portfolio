@@ -102,9 +102,11 @@ export const Monitor = ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1,
     }, [gameActive])
 
     useEffect(() => {
-        if (!gameActive || directionRef.current.x === 0 && directionRef.current.y === 0) return
+        if (!gameActive) return
 
         const interval = setInterval(() => {
+            if (directionRef.current.x === 0 && directionRef.current.y === 0) return
+
             setSnake(prev => {
                 const head = { x: prev[0].x + directionRef.current.x, y: prev[0].y + directionRef.current.y }
 

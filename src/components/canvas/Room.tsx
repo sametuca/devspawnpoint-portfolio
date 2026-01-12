@@ -320,14 +320,6 @@ export const Room = () => {
                     <cylinderGeometry args={[0.03, 0.03, 0.1, 12]} />
                     <meshStandardMaterial color="#e74c3c" />
                 </mesh>
-
-                {/* Controller on couch */}
-                <group position={[1.3, -0.62, 1.5]} rotation={[0, 0.5, 0]}>
-                    <mesh>
-                        <boxGeometry args={[0.15, 0.03, 0.1]} />
-                        <meshStandardMaterial color="#222" />
-                    </mesh>
-                </group>
             </group>
 
         </group>
