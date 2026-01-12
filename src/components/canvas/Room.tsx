@@ -16,6 +16,34 @@ export const Room = () => {
                 <meshStandardMaterial color="#2d2d3a" roughness={0.5} />
             </mesh>
 
+            {/* Carpet */}
+            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, 0.5]}>
+                <planeGeometry args={[4.5, 3.5]} />
+                <meshStandardMaterial color="#8b7355" roughness={0.9} />
+            </mesh>
+            {/* Carpet Pattern - Border */}
+            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.021, 0.5]}>
+                <ringGeometry args={[2.1, 2.25, 4, 1]} />
+                <meshStandardMaterial color="#5d4a3a" />
+            </mesh>
+            {/* Carpet Pattern - Inner Border */}
+            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.021, 0.5]}>
+                <ringGeometry args={[1.9, 2.0, 4, 1]} />
+                <meshStandardMaterial color="#6b5344" />
+            </mesh>
+            {/* Carpet Pattern - Center Diamond */}
+            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.021, 0.5]}>
+                <circleGeometry args={[0.8, 4]} />
+                <meshStandardMaterial color="#5d4a3a" />
+            </mesh>
+            {/* Carpet Pattern - Small Dots */}
+            {[-0.8, -0.4, 0, 0.4, 0.8].map((x, i) => (
+                <mesh key={`dot-${i}`} rotation={[-Math.PI / 2, 0, 0]} position={[x, 0.022, 0.5]}>
+                    <circleGeometry args={[0.05, 16]} />
+                    <meshStandardMaterial color="#4a3829" />
+                </mesh>
+            ))}
+
             {/* Ceiling */}
             <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 2.99, 0]}>
                 <planeGeometry args={[6, 6]} />

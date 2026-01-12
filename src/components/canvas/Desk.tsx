@@ -5,6 +5,7 @@ import { useLoader, useFrame } from '@react-three/fiber'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import * as THREE from 'three'
 import { useMemo, useState, useRef } from 'react'
+import { useMusic } from '../../context/MusicContext'
 
 export const Desk = () => {
 
@@ -20,6 +21,7 @@ export const Desk = () => {
     const [santaPosition, setSantaPosition] = useState(-4)
 
     const { scene: santaModel } = useGLTF('/models/christimas/scene.gltf')
+    const { setMusicActive } = useMusic()
 
 
 
@@ -254,7 +256,7 @@ export const Desk = () => {
 
 
             {/* Improved Headphones (Gaming Style) - Standing on Desk */}
-            <group position={[-1.2, 0.76, 0.3]}>
+            <group position={[-1.0, 0.76, 0.3]} onClick={(e) => { e.stopPropagation(); setMusicActive(true) }}>
                 {/* Headphone Stand Base */}
                 <mesh position={[0, 0.02, 0]}>
                     <cylinderGeometry args={[0.08, 0.1, 0.04, 16]} />
@@ -274,7 +276,7 @@ export const Desk = () => {
                 <group position={[0, 0.28, 0]} rotation={[0.1, 0, 0]}>
                     {/* Headband */}
                     <mesh>
-                        <torusGeometry args={[0.09, 0.015, 12, 24, Math.PI]} />
+                        <torusGeometry args={[0.09, 0.012, 12, 24, Math.PI]} />
                         <meshStandardMaterial color="#1a1a1a" metalness={0.6} roughness={0.3} />
                     </mesh>
                     {/* Headband Padding */}
@@ -285,44 +287,44 @@ export const Desk = () => {
                     {/* Left Ear Cup */}
                     <group position={[-0.09, -0.05, 0]}>
                         <mesh>
-                            <cylinderGeometry args={[0.055, 0.055, 0.03, 24]} />
+                            <cylinderGeometry args={[0.05, 0.05, 0.03, 24]} />
                             <meshStandardMaterial color="#111" metalness={0.4} roughness={0.4} />
                         </mesh>
                         {/* Ear Cushion */}
                         <mesh position={[0, 0.018, 0]}>
-                            <torusGeometry args={[0.04, 0.012, 8, 16]} />
+                            <torusGeometry args={[0.035, 0.01, 8, 16]} />
                             <meshStandardMaterial color="#2a2a2a" />
                         </mesh>
                         {/* RGB Accent */}
                         <mesh position={[0, -0.018, 0]}>
-                            <cylinderGeometry args={[0.045, 0.045, 0.003, 24]} />
+                            <cylinderGeometry args={[0.04, 0.04, 0.003, 24]} />
                             <meshStandardMaterial color="#ff0066" emissive="#ff0066" emissiveIntensity={0.5} />
                         </mesh>
                     </group>
                     {/* Right Ear Cup */}
                     <group position={[0.09, -0.05, 0]}>
                         <mesh>
-                            <cylinderGeometry args={[0.055, 0.055, 0.03, 24]} />
+                            <cylinderGeometry args={[0.05, 0.05, 0.03, 24]} />
                             <meshStandardMaterial color="#111" metalness={0.4} roughness={0.4} />
                         </mesh>
                         {/* Ear Cushion */}
                         <mesh position={[0, 0.018, 0]}>
-                            <torusGeometry args={[0.04, 0.012, 8, 16]} />
+                            <torusGeometry args={[0.035, 0.01, 8, 16]} />
                             <meshStandardMaterial color="#2a2a2a" />
                         </mesh>
                         {/* RGB Accent */}
                         <mesh position={[0, -0.018, 0]}>
-                            <cylinderGeometry args={[0.045, 0.045, 0.003, 24]} />
+                            <cylinderGeometry args={[0.04, 0.04, 0.003, 24]} />
                             <meshStandardMaterial color="#00ffff" emissive="#00ffff" emissiveIntensity={0.5} />
                         </mesh>
                     </group>
                     {/* Microphone Boom */}
                     <mesh position={[-0.09, -0.05, 0.04]} rotation={[0, 0, -Math.PI / 6]}>
-                        <cylinderGeometry args={[0.005, 0.005, 0.12, 8]} />
+                        <cylinderGeometry args={[0.004, 0.004, 0.1, 8]} />
                         <meshStandardMaterial color="#222" metalness={0.8} />
                     </mesh>
-                    <mesh position={[-0.15, -0.08, 0.04]}>
-                        <sphereGeometry args={[0.01, 8, 8]} />
+                    <mesh position={[-0.14, -0.08, 0.04]}>
+                        <sphereGeometry args={[0.008, 8, 8]} />
                         <meshStandardMaterial color="#333" />
                     </mesh>
                 </group>

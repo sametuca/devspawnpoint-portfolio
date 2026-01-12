@@ -61,30 +61,52 @@ export const InteractiveElements = () => {
                     </mesh>
                 </group>
 
-                {/* Christmas Tree */}
-                <ChristmasTree />
-
                 {/* Wall Clock */}
-                <group position={[0, 2, 0.05]}>
-                    {/* Clock Face */}
+                <group position={[0, 2, 0]}>
+                    {/* Clock Face - Flat */}
                     <mesh>
-                        <circleGeometry args={[0.25, 32]} />
-                        <meshStandardMaterial color="#f5f5f5" />
+                        <circleGeometry args={[0.35, 64]} />
+                        <meshStandardMaterial color="#ffffff" roughness={0.2} metalness={0.1} />
                     </mesh>
-                    {/* Clock Frame */}
-                    <mesh>
-                        <torusGeometry args={[0.25, 0.02, 8, 32]} />
-                        <meshStandardMaterial color="#333" />
+                    {/* Outer Ring */}
+                    <mesh position={[0, 0, 0.001]}>
+                        <ringGeometry args={[0.33, 0.35, 64]} />
+                        <meshStandardMaterial color="#1a1a1a" />
                     </mesh>
+                    {/* Hour Markers */}
+                    {Array.from({ length: 12 }).map((_, i) => {
+                        const angle = (i * Math.PI) / 6
+                        const radius = 0.28
+                        const isMain = i % 3 === 0
+                        return (
+                            <mesh
+                                key={i}
+                                position={[Math.sin(angle) * radius, Math.cos(angle) * radius, 0.002]}
+                            >
+                                <circleGeometry args={[isMain ? 0.02 : 0.012, 16]} />
+                                <meshStandardMaterial color="#1a1a1a" />
+                            </mesh>
+                        )
+                    })}
                     {/* Hour Hand */}
-                    <mesh position={[0, 0.05, 0.01]} rotation={[0, 0, Math.PI / 6]}>
-                        <boxGeometry args={[0.02, 0.12, 0.01]} />
-                        <meshStandardMaterial color="#111" />
+                    <mesh position={[0, 0.08, 0.003]} rotation={[0, 0, Math.PI / 6]}>
+                        <boxGeometry args={[0.03, 0.16, 0.01]} />
+                        <meshStandardMaterial color="#1a1a1a" />
                     </mesh>
                     {/* Minute Hand */}
-                    <mesh position={[0, 0.08, 0.01]} rotation={[0, 0, -Math.PI / 3]}>
-                        <boxGeometry args={[0.015, 0.18, 0.01]} />
-                        <meshStandardMaterial color="#111" />
+                    <mesh position={[0, 0.12, 0.004]} rotation={[0, 0, -Math.PI / 3]}>
+                        <boxGeometry args={[0.025, 0.24, 0.008]} />
+                        <meshStandardMaterial color="#1a1a1a" />
+                    </mesh>
+                    {/* Second Hand */}
+                    <mesh position={[0, 0.1, 0.005]} rotation={[0, 0, Math.PI / 4]}>
+                        <boxGeometry args={[0.015, 0.22, 0.006]} />
+                        <meshStandardMaterial color="#e53935" />
+                    </mesh>
+                    {/* Center Cap */}
+                    <mesh position={[0, 0, 0.006]}>
+                        <circleGeometry args={[0.025, 32]} />
+                        <meshStandardMaterial color="#1a1a1a" />
                     </mesh>
                 </group>
 
@@ -126,31 +148,6 @@ export const InteractiveElements = () => {
                 <planeGeometry args={[1.5, 2]} />
                 <meshStandardMaterial map={posterTexture} />
             </mesh>
-        </group>
-    )
-}
-
-function ChristmasTree() {
-    const [showSanta, setShowSanta] = useState(false)
-    const { scene } = useGLTF('/models/christimas/scene.gltf')
-    
-    return (
-        <group position={[-1.5, 0.125, 0]}>
-            <group onClick={(e) => { e.stopPropagation(); setShowSanta(!showSanta) }}>
-                <mesh position={[0, 0, 0]}>
-                    <cylinderGeometry args={[0.12, 0.1, 0.25, 12]} />
-                    <meshStandardMaterial color="#8B4513" />
-                </mesh>
-                <mesh position={[0, 0.5, 0]}>
-                    <coneGeometry args={[0.3, 0.8, 8]} />
-                    <meshStandardMaterial color="#0d5c0d" />
-                </mesh>
-                <mesh position={[0, 0.9, 0]}>
-                    <coneGeometry args={[0.25, 0.6, 8]} />
-                    <meshStandardMaterial color="#0d5c0d" />
-                </mesh>
-            </group>
-            {showSanta && <primitive object={scene.clone()} scale={0.015} position={[-1.5, 0.5, 0]} />}
         </group>
     )
 }

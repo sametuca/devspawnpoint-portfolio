@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect, useRef } from 'react'
-import { Text, Image } from '@react-three/drei'
+import { Text, Image, Html } from '@react-three/drei'
 import { useOverlay } from '../../context/OverlayContext'
+import { useMusic } from '../../context/MusicContext'
 import { MatrixScreen } from './MatrixScreen'
 import * as THREE from 'three'
 
@@ -56,6 +57,7 @@ const DesktopIcon = ({
 
 export const Monitor = ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1, type = 'code', orientation = 'landscape' }: MonitorProps) => {
     const { setOverlay } = useOverlay()
+    const { musicActive, setMusicActive } = useMusic()
     const [hovered, setHover] = useState(false)
     const [gameActive, setGameActive] = useState(false)
     const [snake, setSnake] = useState([{ x: 10, y: 10 }])
@@ -173,8 +175,34 @@ export const Monitor = ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1,
                     />
                 </mesh>
 
+                {/* Music Player */}
+                {musicActive && type === 'code' && (
+                    <group>
+                        <Html position={[0, 0, 0.07]} transform occlude distanceFactor={0.55}>
+                            <div style={{ width: '560px', height: '314px', background: '#000', overflow: 'hidden', pointerEvents: 'auto' }}>
+                                <iframe
+                                    width="560"
+                                    height="314"
+                                    src="https://www.youtube.com/embed/YVowLNuV4Zk?autoplay=1&start=214"
+                                    title="YouTube video player"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                />
+                            </div>
+                        </Html>
+                        <mesh position={[0.75, 0.4, 0.07]} onClick={(e) => { e.stopPropagation(); setMusicActive(false) }}>
+                            <planeGeometry args={[0.08, 0.08]} />
+                            <meshBasicMaterial color="#ff0000" />
+                        </mesh>
+                        <Text position={[0.75, 0.4, 0.071]} fontSize={0.05} color="white" anchorX="center">
+                            ✕
+                        </Text>
+                    </group>
+                )}
+
                 {/* Desktop Icons - Code Monitor (Tech Logos) */}
-                {type === 'code' && !gameActive && (
+                {type === 'code' && !gameActive && !musicActive && (
                     <group position={[0, 0, 0.07]}>
                         <DesktopIcon
                             position={[-0.6, 0.25, 0]}
