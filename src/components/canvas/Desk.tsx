@@ -21,6 +21,7 @@ export const Desk = () => {
     const [santaPosition, setSantaPosition] = useState(-4)
 
     const { scene: santaModel } = useGLTF('/models/christimas/scene.gltf')
+    const { scene: steamController } = useGLTF('/models/steamController/scene.gltf')
     const { setMusicActive } = useMusic()
 
 
@@ -417,6 +418,9 @@ export const Desk = () => {
             {santaFlying && (
                 <primitive object={santaModel.clone()} scale={0.015} position={[santaPosition, 1.5, 1.5]} rotation={[0, Math.PI / 2, 0]} />
             )}
+
+            {/* Steam Controller */}
+            <primitive object={steamController} position={[1.5, 0.82, 2.2]} scale={0.3} rotation={[-Math.PI / 2, 0, 0.5]} />
         </group>
     )
 }

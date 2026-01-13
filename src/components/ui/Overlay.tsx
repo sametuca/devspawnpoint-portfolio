@@ -59,18 +59,40 @@ export const Overlay = () => {
         ),
         contact: (
             <div className="p-8">
-                <h2 className="text-4xl font-bold mb-6 text-purple-400">CONTACT</h2>
-                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                    <div>
-                        <label className="block text-sm text-gray-400 mb-1">Identity</label>
-                        <input type="email" placeholder="user@net.com" className="w-full bg-black/50 border border-purple-500/30 p-2 rounded text-white focus:border-purple-500 outline-none transition" />
+                <h2 className="text-4xl font-bold mb-6 text-purple-400">INFO</h2>
+                <div className="space-y-6">
+                    <div className="bg-black/50 border border-purple-500/30 p-6 rounded">
+                        <h3 className="text-3xl font-bold text-white mb-2">Samet Uca</h3>
+                        <p className="text-xl text-purple-400 mb-4">Full Stack Developer</p>
+                        <div className="flex flex-wrap gap-2">
+                            <span className="text-xs bg-purple-900/50 text-purple-300 px-3 py-1 rounded">JavaScript</span>
+                            <span className="text-xs bg-blue-900/50 text-blue-300 px-3 py-1 rounded">TypeScript</span>
+                            <span className="text-xs bg-cyan-900/50 text-cyan-300 px-3 py-1 rounded">React</span>
+                            <span className="text-xs bg-green-900/50 text-green-300 px-3 py-1 rounded">Node.js</span>
+                            <span className="text-xs bg-orange-900/50 text-orange-300 px-3 py-1 rounded">CSS</span>
+                            <span className="text-xs bg-pink-900/50 text-pink-300 px-3 py-1 rounded">OOP</span>
+                            <span className="text-xs bg-indigo-900/50 text-indigo-300 px-3 py-1 rounded">Three.js</span>
+                        </div>
                     </div>
-                    <div>
-                        <label className="block text-sm text-gray-400 mb-1">Transmission</label>
-                        <textarea placeholder="Message content..." className="w-full bg-black/50 border border-purple-500/30 p-2 rounded text-white h-32 focus:border-purple-500 outline-none transition" />
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-black/50 border border-purple-500/30 p-4 rounded hover:border-purple-400 transition">
+                            <h3 className="text-sm text-gray-400 mb-2">Email</h3>
+                            <a href="mailto:sametuca@hotmail.com" className="text-white hover:text-purple-400 transition break-all">sametuca@hotmail.com</a>
+                        </div>
+                        <div className="bg-black/50 border border-purple-500/30 p-4 rounded hover:border-purple-400 transition">
+                            <h3 className="text-sm text-gray-400 mb-2">LinkedIn</h3>
+                            <a href="https://linkedin.com/in/sametuca" target="_blank" rel="noopener noreferrer" className="text-white hover:text-purple-400 transition">sametuca</a>
+                        </div>
+                        <div className="bg-black/50 border border-purple-500/30 p-4 rounded hover:border-purple-400 transition">
+                            <h3 className="text-sm text-gray-400 mb-2">Instagram</h3>
+                            <a href="https://instagram.com/sametuca" target="_blank" rel="noopener noreferrer" className="text-white hover:text-purple-400 transition">@sametuca</a>
+                        </div>
+                        <div className="bg-black/50 border border-purple-500/30 p-4 rounded hover:border-purple-400 transition">
+                            <h3 className="text-sm text-gray-400 mb-2">Twitter</h3>
+                            <a href="https://twitter.com/sametuca_" target="_blank" rel="noopener noreferrer" className="text-white hover:text-purple-400 transition">@sametuca_</a>
+                        </div>
                     </div>
-                    <button className="bg-purple-600 px-6 py-2 rounded text-white hover:bg-purple-500 transition w-full font-bold tracking-wider">SEND SIGNAL</button>
-                </form>
+                </div>
             </div>
         ),
         terminal: <GeminiTerminal />,

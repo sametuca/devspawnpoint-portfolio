@@ -1,6 +1,11 @@
 import { useTexture, useGLTF } from '@react-three/drei'
 import { useState } from 'react'
 
+function GoogleModel() {
+    const { scene } = useGLTF('/models/google/scene.gltf')
+    return <primitive object={scene} position={[2.9, 1.8, 0]} scale={0.075} rotation={[0, -Math.PI / 2, 0]} />
+}
+
 export const InteractiveElements = () => {
     const posterTexture = useTexture('/textures/antigravity-poster.png')
 
@@ -143,11 +148,8 @@ export const InteractiveElements = () => {
 
 
 
-            {/* Right Wall - Antigravity Poster */}
-            <mesh position={[2.95, 1.8, 0]} rotation={[0, -Math.PI / 2, 0]}>
-                <planeGeometry args={[1.5, 2]} />
-                <meshStandardMaterial map={posterTexture} />
-            </mesh>
+            {/* Right Wall - Google Model */}
+            <GoogleModel />
         </group>
     )
 }

@@ -3,6 +3,11 @@ import { useTexture, Text, useGLTF } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useState } from 'react'
 
+function Armchair() {
+    const { scene } = useGLTF('/models/armchair/scene.gltf')
+    return <primitive object={scene} position={[1.5, -1.0, 1.8]} scale={0.9} rotation={[0, Math.PI, 0]} />
+}
+
 export const Room = () => {
     const wallMaterial = new THREE.MeshStandardMaterial({ color: "#e0e0e0", roughness: 0.8 })
     const [outdoorTexture, marioTexture] = useTexture(['/textures/outdoor.jpg', '/textures/supermario.jpg'])
@@ -248,55 +253,8 @@ export const Room = () => {
 
                 {/* ===== GAMING AREA ===== */}
 
-                {/* Couch (In front of TV) - Facing TV */}
-                <group position={[1.5, -1.25, 1.8]} scale={1.3}>
-                    {/* Couch Legs */}
-                    <mesh position={[-0.5, -0.18, 0.15]}>
-                        <boxGeometry args={[0.06, 0.08, 0.06]} />
-                        <meshStandardMaterial color="#222" />
-                    </mesh>
-                    <mesh position={[0.5, -0.18, 0.15]}>
-                        <boxGeometry args={[0.06, 0.08, 0.06]} />
-                        <meshStandardMaterial color="#222" />
-                    </mesh>
-                    <mesh position={[-0.5, -0.18, -0.15]}>
-                        <boxGeometry args={[0.06, 0.08, 0.06]} />
-                        <meshStandardMaterial color="#222" />
-                    </mesh>
-                    <mesh position={[0.5, -0.18, -0.15]}>
-                        <boxGeometry args={[0.06, 0.08, 0.06]} />
-                        <meshStandardMaterial color="#222" />
-                    </mesh>
-                    {/* Seat Base */}
-                    <mesh position={[0, 0, 0]}>
-                        <boxGeometry args={[1.2, 0.2, 0.5]} />
-                        <meshStandardMaterial color="#2c3e50" />
-                    </mesh>
-                    {/* Backrest */}
-                    <mesh position={[0, 0.25, 0.22]}>
-                        <boxGeometry args={[1.2, 0.35, 0.12]} />
-                        <meshStandardMaterial color="#2c3e50" />
-                    </mesh>
-                    {/* Left Armrest */}
-                    <mesh position={[-0.55, 0.1, 0]}>
-                        <boxGeometry args={[0.1, 0.3, 0.5]} />
-                        <meshStandardMaterial color="#34495e" />
-                    </mesh>
-                    {/* Right Armrest */}
-                    <mesh position={[0.55, 0.1, 0]}>
-                        <boxGeometry args={[0.1, 0.3, 0.5]} />
-                        <meshStandardMaterial color="#34495e" />
-                    </mesh>
-                    {/* Cushions */}
-                    <mesh position={[-0.25, 0.12, -0.03]}>
-                        <boxGeometry args={[0.45, 0.06, 0.35]} />
-                        <meshStandardMaterial color="#3d566e" />
-                    </mesh>
-                    <mesh position={[0.25, 0.12, -0.03]}>
-                        <boxGeometry args={[0.45, 0.06, 0.35]} />
-                        <meshStandardMaterial color="#3d566e" />
-                    </mesh>
-                </group>
+                {/* Armchair (In front of TV) - Facing TV */}
+                <Armchair />
 
                 {/* Coffee Table */}
                 <group position={[1.5, -1.1, 0.9]}>

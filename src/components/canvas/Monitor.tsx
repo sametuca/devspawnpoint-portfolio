@@ -255,7 +255,7 @@ export const Monitor = ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1,
                         <DesktopIcon
                             position={[0.5, 0.2, 0]}
                             iconUrl="/textures/logos/contactlogo.png"
-                            label="Contact"
+                            label="About"
                             onClick={() => setOverlay('contact')}
                         />
                     </group>
