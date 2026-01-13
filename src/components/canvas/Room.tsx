@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { useTexture, Text, useGLTF } from '@react-three/drei'
-import { useThree } from '@react-three/fiber'
-import { useState } from 'react'
+import { useThree, useFrame } from '@react-three/fiber'
+import { useState, useMemo, useRef } from 'react'
 
 function Armchair() {
     const { scene } = useGLTF('/models/armchair/scene.gltf')
@@ -12,6 +12,23 @@ export const Room = () => {
     const wallMaterial = new THREE.MeshStandardMaterial({ color: "#e0e0e0", roughness: 0.8 })
     const [outdoorTexture, marioTexture] = useTexture(['/textures/outdoor.jpg', '/textures/supermario.jpg'])
     const [lightsOn, setLightsOn] = useState(true)
+
+    const [snowflakes, setSnowflakes] = useState(() => 
+        Array.from({ length: 100 }, () => ({
+            x: (Math.random() - 0.5) * 1.8,
+            y: Math.random() * 1.3,
+            z: Math.random() * 0.1,
+            speed: 0.001 + Math.random() * 0.002,
+            size: 0.01 + Math.random() * 0.015
+        }))
+    )
+
+    useFrame(() => {
+        setSnowflakes(prev => prev.map(flake => ({
+            ...flake,
+            y: flake.y - flake.speed < -0.65 ? 0.65 : flake.y - flake.speed
+        })))
+    })
 
     return (
         <group>
@@ -177,6 +194,13 @@ export const Room = () => {
                         <planeGeometry args={[1.8, 1.3]} />
                         <meshBasicMaterial map={outdoorTexture} />
                     </mesh>
+                    {/* Snowflakes */}
+                    {snowflakes.map((flake, i) => (
+                        <mesh key={i} position={[flake.x, flake.y, -0.06 + flake.z]}>
+                            <circleGeometry args={[flake.size, 6]} />
+                            <meshBasicMaterial color="#ffffff" transparent opacity={0.9} side={THREE.DoubleSide} />
+                        </mesh>
+                    ))}
                     {/* Window Frame */}
                     <group position={[0, 0, 0.02]}>
                         {/* Top */}
