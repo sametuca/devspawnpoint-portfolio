@@ -40,8 +40,8 @@ function PlayStation5() {
 function Window3D() {
     const { scene } = useGLTF('/models/window/scene.gltf')
     return <primitive object={scene.clone()}
-        position={[1.60, -1.20, 1.80]}
-        scale={0.038} rotation={[0, -Math.PI / 2, 0]} />
+        position={[0, 0.1, 0.02]}
+        scale={0.02} rotation={[0, -Math.PI / 2, 0]} />
 }
 
 export const Room = () => {

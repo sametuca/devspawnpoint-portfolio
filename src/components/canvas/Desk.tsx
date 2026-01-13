@@ -65,6 +65,7 @@ export const Desk = () => {
     const [santaPosition, setSantaPosition] = useState(-4)
 
     const { scene: santaModel } = useGLTF('/models/christimas/scene.gltf')
+    const { scene: xmasTreeModel } = useGLTF('/models/xmas-tree/scene.gltf')
     const { scene: steamController } = useGLTF('/models/steamController/scene.gltf')
     const { scene: gamingChair } = useGLTF('/models/gamingChair/scene.gltf')
     const { scene: iphoneModel } = useGLTF('/models/iphone/scene.gltf')
@@ -197,8 +198,8 @@ export const Desk = () => {
             />
 
             {/* 3D Mouse Model */}
-            <primitive object={mouseModel.clone()} position={[0.55, 0.76, 0.5]} 
-            scale={0.025} rotation={[0, -0, 0]} />
+            <primitive object={mouseModel.clone()} position={[0.55, 0.76, 0.5]}
+                scale={0.025} rotation={[0, -0, 0]} />
 
             {/* iPhone Model */}
             <primitive object={iphoneModel.clone()} position={[-0.5, 0.77, 0.55]} scale={0.01} rotation={[-Math.PI / 2, 0, 0.2]} />
@@ -336,56 +337,13 @@ export const Desk = () => {
 
 
             {/* ===== CHRISTMAS TREE ===== */}
+            {/* 3D Christmas Tree Model */}
             <group position={[-2.5, 0, -2.5]} onClick={(e) => { e.stopPropagation(); setSantaFlying(true); setSantaPosition(-4) }}>
-                {/* Tree Pot */}
-                <mesh position={[0, 0.15, 0]}>
-                    <cylinderGeometry args={[0.15, 0.12, 0.3, 8]} />
-                    <meshStandardMaterial color="#8B4513" />
-                </mesh>
-                {/* Tree Trunk */}
-                <mesh position={[0, 0.4, 0]}>
-                    <cylinderGeometry args={[0.05, 0.06, 0.3, 8]} />
-                    <meshStandardMaterial color="#5d4037" />
-                </mesh>
-                {/* Tree Layers (Cones) */}
-                <mesh position={[0, 0.7, 0]}>
-                    <coneGeometry args={[0.4, 0.5, 8]} />
-                    <meshStandardMaterial color="#228B22" />
-                </mesh>
-                <mesh position={[0, 1.0, 0]}>
-                    <coneGeometry args={[0.32, 0.45, 8]} />
-                    <meshStandardMaterial color="#2E8B57" />
-                </mesh>
-                <mesh position={[0, 1.3, 0]}>
-                    <coneGeometry args={[0.24, 0.4, 8]} />
-                    <meshStandardMaterial color="#32CD32" />
-                </mesh>
-                {/* Star on Top */}
-                <mesh position={[0, 1.55, 0]}>
-                    <octahedronGeometry args={[0.08]} />
-                    <meshStandardMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={1} />
-                </mesh>
-                {/* Ornaments (colored spheres) */}
-                <mesh position={[0.2, 0.65, 0.15]}>
-                    <sphereGeometry args={[0.04]} />
-                    <meshStandardMaterial color="#ff0000" emissive="#ff0000" emissiveIntensity={0.3} />
-                </mesh>
-                <mesh position={[-0.15, 0.75, 0.2]}>
-                    <sphereGeometry args={[0.035]} />
-                    <meshStandardMaterial color="#0000ff" emissive="#0000ff" emissiveIntensity={0.3} />
-                </mesh>
-                <mesh position={[0.1, 0.95, -0.15]}>
-                    <sphereGeometry args={[0.04]} />
-                    <meshStandardMaterial color="#FFD700" emissive="#FFD700" emissiveIntensity={0.3} />
-                </mesh>
-                <mesh position={[-0.12, 1.1, 0.1]}>
-                    <sphereGeometry args={[0.03]} />
-                    <meshStandardMaterial color="#ff00ff" emissive="#ff00ff" emissiveIntensity={0.3} />
-                </mesh>
-                <mesh position={[0.08, 1.25, 0.08]}>
-                    <sphereGeometry args={[0.03]} />
-                    <meshStandardMaterial color="#00ffff" emissive="#00ffff" emissiveIntensity={0.3} />
-                </mesh>
+                <primitive
+                    object={xmasTreeModel.clone()}
+                    scale={0.5}
+                    rotation={[0, 0, 0]}
+                />
             </group>
 
             {/* Santa Flying */}
