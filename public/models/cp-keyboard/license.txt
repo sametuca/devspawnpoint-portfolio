@@ -1,0 +1,11 @@
+Model Information:
+* title:	Custom - Mechanical Keyboard
+* source:	https://sketchfab.com/3d-models/custom-mechanical-keyboard-90d61eec0c484332ab562c5f4eda6f52
+* author:	unknown.fbx (https://sketchfab.com/unknown.fbx)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Custom - Mechanical Keyboard" (https://sketchfab.com/3d-models/custom-mechanical-keyboard-90d61eec0c484332ab562c5f4eda6f52) by unknown.fbx (https://sketchfab.com/unknown.fbx) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

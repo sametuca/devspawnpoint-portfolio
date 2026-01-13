@@ -1,0 +1,8 @@
+Model Information:
+* title:	Apple iPhone 17 Pro Max
+* source:	https://sketchfab.com/3d-models/apple-iphone-17-pro-max-43570bd2d48f48b6aafb8adbb04e346d
+* author:	Apple User (https://sketchfab.com/apple-user)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

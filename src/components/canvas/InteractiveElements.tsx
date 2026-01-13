@@ -1,12 +1,12 @@
-import { useTexture, useGLTF } from '@react-three/drei'
+import { useGLTF } from '@react-three/drei'
 import { useState } from 'react'
 
 function GoogleModel() {
     const { scene } = useGLTF('/models/google/scene.gltf')
     const [ledsOn, setLedsOn] = useState(true)
-    
+
     const ledColors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ff8800', '#8800ff', '#00ff88', '#ff0088', '#88ff00', '#0088ff', '#ff4444', '#44ff44', '#4444ff', '#ffaa00', '#aa00ff', '#00ffaa', '#ff00aa', '#aaff00']
-    
+
     return (
         <group onClick={(e) => { e.stopPropagation(); setLedsOn(!ledsOn) }}>
             <primitive object={scene} position={[2.9, 1.8, 0]} scale={0.075} rotation={[0, -Math.PI / 2, 0]} />
@@ -25,14 +25,7 @@ function GoogleModel() {
     )
 }
 
-function ClockModel() {
-    const { scene } = useGLTF('/models/clock/scene.gltf')
-    return <primitive object={scene} position={[0, 2, 0]} scale={0.002} rotation={[0, Math.PI, 0]} />
-}
-
 export const InteractiveElements = () => {
-    const posterTexture = useTexture('/textures/antigravity-poster.png')
-
     return (
         <group>
 
@@ -90,8 +83,7 @@ export const InteractiveElements = () => {
                     </mesh>
                 </group>
 
-                {/* Wall Clock */}
-                <ClockModel />
+
 
                 {/* Small Bookshelf on floor */}
                 <group position={[0.5, 0.4, 0]}>

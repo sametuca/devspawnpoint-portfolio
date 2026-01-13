@@ -1,11 +1,55 @@
 import { Monitor } from './Monitor'
-import { useGLTF, Text } from '@react-three/drei'
+import { useGLTF, Text, Image } from '@react-three/drei'
 import { Chair } from './Chair'
 import { useLoader, useFrame } from '@react-three/fiber'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import * as THREE from 'three'
 import { useMemo, useState, useRef } from 'react'
 import { useMusic } from '../../context/MusicContext'
+import { useOverlay } from '../../context/OverlayContext'
+
+// MacBook component with Gemini app
+function MacBook({ position, rotation, scale }: { position: [number, number, number], rotation: [number, number, number], scale: number }) {
+    const { scene } = useGLTF('/models/macbook/scene.gltf')
+    const { setOverlay } = useOverlay()
+    const [hovered, setHovered] = useState(false)
+
+    return (
+        <group position={position} rotation={rotation}>
+            <primitive object={scene.clone()} scale={scale} />
+            {/* Gemini App Icon on Screen - positioned on MacBook screen */}
+            <group
+                position={[0, 0.26, -0.37]}
+                rotation={[-0.3, 0, 0]}
+                onClick={(e) => { e.stopPropagation(); setOverlay('terminal'); }}
+                onPointerOver={() => setHovered(true)}
+                onPointerOut={() => setHovered(false)}
+            >
+                {/* Invisible clickable area */}
+                <mesh>
+                    <planeGeometry args={[0.15, 0.15]} />
+                    <meshBasicMaterial transparent opacity={0} />
+                </mesh>
+                {/* Gemini Logo Image */}
+                <Image
+                    url="/textures/logos/geminilogo.png"
+                    scale={hovered ? 0.12 : 0.1}
+                    position={[0, 0.03, 0.001]}
+                    transparent
+                />
+                {/* Label */}
+                <Text
+                    position={[0, -0.04, 0.001]}
+                    fontSize={0.02}
+                    color="#ffffff"
+                    anchorX="center"
+                >
+                    Gemini
+                </Text>
+            </group>
+        </group>
+    )
+}
 
 export const Desk = () => {
 
@@ -16,13 +60,16 @@ export const Desk = () => {
     const { scene: donaldDuck } = useGLTF('/models/donalduck/donaldduck.gltf')
 
     const [waterSpilling, setWaterSpilling] = useState(false)
-    const [waterDrops, setWaterDrops] = useState<Array<{id: number, y: number, x: number, z: number, speed: number}>>([])
+    const [waterDrops, setWaterDrops] = useState<Array<{ id: number, y: number, x: number, z: number, speed: number }>>([])
     const [santaFlying, setSantaFlying] = useState(false)
     const [santaPosition, setSantaPosition] = useState(-4)
 
     const { scene: santaModel } = useGLTF('/models/christimas/scene.gltf')
     const { scene: steamController } = useGLTF('/models/steamController/scene.gltf')
     const { scene: gamingChair } = useGLTF('/models/gamingChair/scene.gltf')
+    const { scene: iphoneModel } = useGLTF('/models/iphone/scene.gltf')
+    const { scene: mouseModel } = useGLTF('/models/cp-mouse/scene.gltf')
+    const { scene: keyboardModel } = useGLTF('/models/cp-keyboard/scene.gltf')
     const { setMusicActive } = useMusic()
 
 
@@ -114,13 +161,11 @@ export const Desk = () => {
 
             {/* Monitors */}
             <Monitor position={[0, 1.25, 0]} scale={0.8} type="code" />
-            <Monitor
-                position={[-1.5, 1.19, 0.2]}
+            {/* MacBook with Gemini App */}
+            <MacBook
+                position={[-1.6, 0.79, 0.2]}
                 rotation={[0, 0.3, 0]}
-                scale={0.7}
-                type="terminal"
-                orientation="portrait"
-            />
+                scale={2.5} />
             <Monitor
                 position={[1.5, 1.25, 0.2]}
                 rotation={[0, -0.3, 0]}
@@ -143,92 +188,20 @@ export const Desk = () => {
                 <meshStandardMaterial color="#a0a0a0" roughness={0.9} />
             </mesh>
 
-            {/* Mechanical Keyboard (Detailed) */}
-            <group position={[0, 0.76, 0.5]}>
-                {/* Keyboard Base */}
-                <mesh>
-                    <boxGeometry args={[0.5, 0.02, 0.18]} />
-                    <meshStandardMaterial color="#1a1a1a" />
-                </mesh>
-                {/* Keyboard Top Plate */}
-                <mesh position={[0, 0.015, 0]}>
-                    <boxGeometry args={[0.48, 0.01, 0.16]} />
-                    <meshStandardMaterial color="#2d2d2d" />
-                </mesh>
-                {/* Key Rows - 4 rows of keys */}
-                {/* Row 1 (Top - Function keys) */}
-                {Array.from({ length: 12 }).map((_, i) => (
-                    <mesh key={`f${i}`} position={[-0.21 + i * 0.038, 0.03, -0.055]}>
-                        <boxGeometry args={[0.032, 0.015, 0.025]} />
-                        <meshStandardMaterial color="#333" />
-                    </mesh>
-                ))}
-                {/* Row 2 (Number keys) */}
-                {Array.from({ length: 13 }).map((_, i) => (
-                    <mesh key={`n${i}`} position={[-0.22 + i * 0.036, 0.03, -0.02]}>
-                        <boxGeometry args={[0.03, 0.015, 0.028]} />
-                        <meshStandardMaterial color="#444" />
-                    </mesh>
-                ))}
-                {/* Row 3 (QWERTY) */}
-                {Array.from({ length: 12 }).map((_, i) => (
-                    <mesh key={`q${i}`} position={[-0.2 + i * 0.037, 0.03, 0.015]}>
-                        <boxGeometry args={[0.032, 0.015, 0.028]} />
-                        <meshStandardMaterial color="#444" />
-                    </mesh>
-                ))}
-                {/* Row 4 (Bottom - Space bar etc) */}
-                {Array.from({ length: 10 }).map((_, i) => (
-                    <mesh key={`b${i}`} position={[-0.17 + i * 0.038, 0.03, 0.05]}>
-                        <boxGeometry args={[0.032, 0.015, 0.028]} />
-                        <meshStandardMaterial color="#444" />
-                    </mesh>
-                ))}
-                {/* Space Bar */}
-                <mesh position={[0, 0.03, 0.05]}>
-                    <boxGeometry args={[0.15, 0.015, 0.028]} />
-                    <meshStandardMaterial color="#555" />
-                </mesh>
-            </group>
+            {/* 3D Keyboard Model */}
+            <primitive
+                object={keyboardModel.clone()}
+                position={[-0.2, 0.68, 0.45]}
+                scale={0.0008}
+                rotation={[0, 0, 0]}
+            />
 
-            {/* Gaming Mouse (Ergonomic shape) */}
-            <group position={[0.45, 0.76, 0.5]}>
-                {/* Mouse Pad */}
-                <mesh position={[0, -0.005, 0]}>
-                    <boxGeometry args={[0.25, 0.005, 0.22]} />
-                    <meshStandardMaterial color="#222" />
-                </mesh>
-                {/* Mouse Body - Main */}
-                <mesh position={[0, 0.015, 0]}>
-                    <boxGeometry args={[0.06, 0.025, 0.1]} />
-                    <meshStandardMaterial color="#111" />
-                </mesh>
-                {/* Mouse - Front (narrower) */}
-                <mesh position={[0, 0.012, -0.04]}>
-                    <boxGeometry args={[0.045, 0.02, 0.03]} />
-                    <meshStandardMaterial color="#111" />
-                </mesh>
-                {/* Left Click */}
-                <mesh position={[-0.015, 0.03, -0.02]}>
-                    <boxGeometry args={[0.025, 0.008, 0.06]} />
-                    <meshStandardMaterial color="#1a1a1a" />
-                </mesh>
-                {/* Right Click */}
-                <mesh position={[0.015, 0.03, -0.02]}>
-                    <boxGeometry args={[0.025, 0.008, 0.06]} />
-                    <meshStandardMaterial color="#1a1a1a" />
-                </mesh>
-                {/* Scroll Wheel */}
-                <mesh position={[0, 0.035, -0.015]} rotation={[Math.PI / 2, 0, 0]}>
-                    <cylinderGeometry args={[0.008, 0.008, 0.015, 12]} />
-                    <meshStandardMaterial color="#444" />
-                </mesh>
-                {/* RGB Strip */}
-                <mesh position={[0, 0.005, 0]}>
-                    <boxGeometry args={[0.065, 0.003, 0.08]} />
-                    <meshStandardMaterial color="#00ffff" emissive="#00ffff" emissiveIntensity={0.5} />
-                </mesh>
-            </group>
+            {/* 3D Mouse Model */}
+            <primitive object={mouseModel.clone()} position={[0.55, 0.76, 0.5]} 
+            scale={0.025} rotation={[0, -0, 0]} />
+
+            {/* iPhone Model */}
+            <primitive object={iphoneModel.clone()} position={[-0.5, 0.77, 0.55]} scale={0.01} rotation={[-Math.PI / 2, 0, 0.2]} />
 
             {/* 3D Coffee Cup Model */}
             <group onClick={(e) => { e.stopPropagation(); handleCupClick() }}>
@@ -339,7 +312,7 @@ export const Desk = () => {
             </mesh>
             {/* Notebook Lines */}
             {Array.from({ length: 8 }).map((_, i) => (
-                <mesh key={`line${i}`} position={[-0.52, 0.772, 0.65 - i * 0.02]} rotation={[-Math.PI/2, 0, 0.2]}>
+                <mesh key={`line${i}`} position={[-0.52, 0.772, 0.65 - i * 0.02]} rotation={[-Math.PI / 2, 0, 0.2]}>
                     <boxGeometry args={[0.1, 0.001, 0.001]} />
                     <meshBasicMaterial color="#0066cc" />
                 </mesh>
@@ -347,7 +320,7 @@ export const Desk = () => {
             {/* "detail" text */}
             <Text
                 position={[-0.52, 0.773, 0.63]}
-                rotation={[-Math.PI/2, 0, 0.2]}
+                rotation={[-Math.PI / 2, 0, 0.2]}
                 fontSize={0.03}
                 color="#333"
                 anchorX="left"

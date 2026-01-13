@@ -17,7 +17,7 @@ function App() {
         <Overlay />
         <Canvas
           shadows
-          camera={{ position: [0, 1.6, 4], fov: 50 }}
+          camera={{ position: [0, 2.5, 3.5], fov: 50 }}
           dpr={[1, 2]}
         >
           <color attach="background" args={['#050510']} />

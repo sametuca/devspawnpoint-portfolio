@@ -1,19 +1,60 @@
 import * as THREE from 'three'
 import { useTexture, Text, useGLTF } from '@react-three/drei'
-import { useThree, useFrame } from '@react-three/fiber'
-import { useState, useMemo, useRef } from 'react'
+import { useFrame } from '@react-three/fiber'
+import { useState } from 'react'
 
 function Armchair() {
     const { scene } = useGLTF('/models/armchair/scene.gltf')
     return <primitive object={scene} position={[1.5, -1.0, 1.8]} scale={0.9} rotation={[0, Math.PI, 0]} />
 }
 
+function CeilingLamp({ lightsOn, onClick }: { lightsOn: boolean; onClick: (e: any) => void }) {
+    const { scene } = useGLTF('/models/lamp/scene.gltf')
+    const clonedScene = scene.clone()
+
+    // Make all meshes clickable
+    clonedScene.traverse((child: any) => {
+        if (child.isMesh) {
+            child.userData.clickable = true
+        }
+    })
+
+    return (
+        <group position={[0, 2.95, 0]}>
+            {/* Invisible clickable sphere */}
+            <mesh onClick={(e) => { e.stopPropagation(); onClick(e); }}>
+                <sphereGeometry args={[0.5]} />
+                <meshBasicMaterial transparent opacity={0} />
+            </mesh>
+            <primitive object={clonedScene} scale={0.3} rotation={[0, 0, 0]} />
+            <pointLight position={[0, -0.5, 0]} color="#ffe4b5" intensity={lightsOn ? 15 : 0} distance={5} decay={2} />
+        </group>
+    )
+}
+
+function PlayStation5() {
+    const { scene } = useGLTF('/models/playstation_5/scene.gltf')
+    return <primitive object={scene.clone()} position={[2.3, -0.30, 0.25]} scale={0.15} rotation={[0, Math.PI / 2, 0]} />
+}
+
+function Window3D() {
+    const { scene } = useGLTF('/models/window/scene.gltf')
+    return <primitive object={scene.clone()}
+        position={[1.60, -1.20, 1.80]}
+        scale={0.038} rotation={[0, -Math.PI / 2, 0]} />
+}
+
 export const Room = () => {
     const wallMaterial = new THREE.MeshStandardMaterial({ color: "#e0e0e0", roughness: 0.8 })
-    const [outdoorTexture, marioTexture] = useTexture(['/textures/outdoor.jpg', '/textures/supermario.jpg'])
+    const [outdoorTexture, marioTexture, gtaPoster, posterGaming] = useTexture([
+        '/textures/outdoor.jpg',
+        '/textures/supermario.jpg',
+        '/textures/logos/gta3poster.jpg',
+        '/textures/poster_gaming.png'
+    ])
     const [lightsOn, setLightsOn] = useState(true)
 
-    const [snowflakes, setSnowflakes] = useState(() => 
+    const [snowflakes, setSnowflakes] = useState(() =>
         Array.from({ length: 100 }, () => ({
             x: (Math.random() - 0.5) * 1.8,
             y: Math.random() * 1.3,
@@ -73,21 +114,7 @@ export const Room = () => {
             </mesh>
 
             {/* Ceiling Lamp / Chandelier */}
-            <group position={[0, 2.8, 0]} onClick={(e) => { e.stopPropagation(); setLightsOn(!lightsOn) }} style={{ cursor: 'pointer' }}>
-                <mesh position={[0, 0.1, 0]}>
-                    <cylinderGeometry args={[0.08, 0.08, 0.1, 16]} />
-                    <meshStandardMaterial color="#222" metalness={0.9} />
-                </mesh>
-                <mesh position={[0, -0.15, 0]}>
-                    <cylinderGeometry args={[0.02, 0.02, 0.4, 8]} />
-                    <meshStandardMaterial color="#111" />
-                </mesh>
-                <mesh position={[0, -0.45, 0]}>
-                    <cylinderGeometry args={[0.15, 0.25, 0.3, 16]} />
-                    <meshStandardMaterial color="#f5f0e6" emissive={lightsOn ? "#ffe4b5" : "#000"} emissiveIntensity={lightsOn ? 0.3 : 0} />
-                </mesh>
-                <pointLight position={[0, -0.5, 0]} color="#ffe4b5" intensity={lightsOn ? 15 : 0} distance={5} decay={2} />
-            </group>
+            <CeilingLamp lightsOn={lightsOn} onClick={(e) => { e.stopPropagation(); setLightsOn(!lightsOn) }} />
 
             {/* Back Wall (Whiteboard Side) */}
             <group>
@@ -97,7 +124,7 @@ export const Room = () => {
                 </mesh>
                 {/* Door */}
                 <mesh position={[2, 1, -2.95]}>
-                    <boxGeometry args={[0.9, 2, 0.1]} />
+                    <boxGeometry args={[0.9, 2.60, 0.1]} />
                     <meshStandardMaterial color="#4d3b3b" />
                 </mesh>
                 <mesh position={[2.35, 1, -2.9]}>
@@ -106,7 +133,7 @@ export const Room = () => {
                 </mesh>
 
                 {/* Navigation Instructions Panel */}
-                <group position={[0.5, 2.55, -2.9]}>
+                <group position={[0.5, 1.95, -2.9]}>
                     {/* Panel Background */}
                     <mesh>
                         <planeGeometry args={[1.8, 0.7]} />
@@ -161,6 +188,34 @@ export const Room = () => {
                     </Text>
                 </group>
 
+                {/* Poster 1 - Sci-Fi (Left side) */}
+                <group position={[-1.8, 1.5, -2.9]}>
+                    {/* Frame */}
+                    <mesh>
+                        <boxGeometry args={[-1, 0.96, 0.04]} />
+                        <meshStandardMaterial color="#1a1a1a" />
+                    </mesh>
+                    {/* Poster Image */}
+                    <mesh position={[0, 0, 0.01]}>
+                        <planeGeometry args={[1.2, 1.6]} />
+                        <meshStandardMaterial map={gtaPoster} />
+                    </mesh>
+                </group>
+
+                {/* Poster 2 - Gaming (Right side) */}
+                <group position={[-0.8, 1.82, -2.9]}>
+                    {/* Frame */}
+                    <mesh>
+                        <boxGeometry args={[0.72, 0.96, 0.04]} />
+                        <meshStandardMaterial color="#1a1a1a" />
+                    </mesh>
+                    {/* Poster Image */}
+                    <mesh position={[0, 0, 0.025]}>
+                        <planeGeometry args={[0.64, 0.88]} />
+                        <meshBasicMaterial map={posterGaming} />
+                    </mesh>
+                </group>
+
             </group>
 
             {/* Front Wall (Behind Camera) */}
@@ -189,50 +244,20 @@ export const Room = () => {
 
                 {/* Window (Positioned toward back Z) */}
                 <group position={[-1.5, 0, 0]}>
-                    {/* Outdoor View - FIXED: Now in front of wall */}
-                    <mesh position={[0, 0, 0.01]}>
-                        <planeGeometry args={[1.8, 1.3]} />
+                    {/* Outdoor View - sized to fit window */}
+                    <mesh position={[0, 0.1, -0.03]}>
+                        <planeGeometry args={[1.2, 0.9]} />
                         <meshBasicMaterial map={outdoorTexture} />
                     </mesh>
-                    {/* Snowflakes */}
+                    {/* Snowflakes - contained within window area */}
                     {snowflakes.map((flake, i) => (
-                        <mesh key={i} position={[flake.x, flake.y, -0.06 + flake.z]}>
-                            <circleGeometry args={[flake.size, 6]} />
+                        <mesh key={i} position={[flake.x * 0.6, flake.y * 0.7 + 0.1, -0.04 + flake.z]}>
+                            <circleGeometry args={[flake.size * 0.7, 6]} />
                             <meshBasicMaterial color="#ffffff" transparent opacity={0.9} side={THREE.DoubleSide} />
                         </mesh>
                     ))}
-                    {/* Window Frame */}
-                    <group position={[0, 0, 0.02]}>
-                        {/* Top */}
-                        <mesh position={[0, 0.7, 0]}>
-                            <boxGeometry args={[2, 0.08, 0.06]} />
-                            <meshStandardMaterial color="#f5f5f0" />
-                        </mesh>
-                        {/* Bottom */}
-                        <mesh position={[0, -0.7, 0]}>
-                            <boxGeometry args={[2, 0.08, 0.06]} />
-                            <meshStandardMaterial color="#f5f5f0" />
-                        </mesh>
-                        {/* Left */}
-                        <mesh position={[-0.95, 0, 0]}>
-                            <boxGeometry args={[0.08, 1.4, 0.06]} />
-                            <meshStandardMaterial color="#f5f5f0" />
-                        </mesh>
-                        {/* Right */}
-                        <mesh position={[0.95, 0, 0]}>
-                            <boxGeometry args={[0.08, 1.4, 0.06]} />
-                            <meshStandardMaterial color="#f5f5f0" />
-                        </mesh>
-                        {/* Center Cross */}
-                        <mesh>
-                            <boxGeometry args={[0.04, 1.4, 0.06]} />
-                            <meshStandardMaterial color="#f5f5f0" />
-                        </mesh>
-                        <mesh>
-                            <boxGeometry args={[1.9, 0.04, 0.06]} />
-                            <meshStandardMaterial color="#f5f5f0" />
-                        </mesh>
-                    </group>
+                    {/* 3D Window Model */}
+                    <Window3D />
                 </group>
 
                 {/* TV (Positioned toward front Z) - CLICKABLE */}
@@ -263,17 +288,8 @@ export const Room = () => {
                     <meshStandardMaterial color="#3d2314" />
                 </mesh>
 
-                {/* Game Console (On cabinet) */}
-                <group position={[1.5, -0.25, 0.25]}>
-                    <mesh>
-                        <boxGeometry args={[0.4, 0.08, 0.25]} />
-                        <meshStandardMaterial color="#1a1a1a" />
-                    </mesh>
-                    <mesh position={[0.15, 0.05, 0.13]}>
-                        <sphereGeometry args={[0.015]} />
-                        <meshStandardMaterial color="#00ff00" emissive="#00ff00" emissiveIntensity={2} />
-                    </mesh>
-                </group>
+                {/* Game Console (PlayStation 5) */}
+                <PlayStation5 />
 
                 {/* ===== GAMING AREA ===== */}
 
