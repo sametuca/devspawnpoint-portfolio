@@ -25,6 +25,11 @@ function GoogleModel() {
     )
 }
 
+function ClockModel() {
+    const { scene } = useGLTF('/models/clock/scene.gltf')
+    return <primitive object={scene} position={[0, 2, 0]} scale={0.002} rotation={[0, Math.PI, 0]} />
+}
+
 export const InteractiveElements = () => {
     const posterTexture = useTexture('/textures/antigravity-poster.png')
 
@@ -86,53 +91,7 @@ export const InteractiveElements = () => {
                 </group>
 
                 {/* Wall Clock */}
-                <group position={[0, 2, 0]}>
-                    {/* Clock Face - Flat */}
-                    <mesh>
-                        <circleGeometry args={[0.35, 64]} />
-                        <meshStandardMaterial color="#ffffff" roughness={0.2} metalness={0.1} />
-                    </mesh>
-                    {/* Outer Ring */}
-                    <mesh position={[0, 0, 0.001]}>
-                        <ringGeometry args={[0.33, 0.35, 64]} />
-                        <meshStandardMaterial color="#1a1a1a" />
-                    </mesh>
-                    {/* Hour Markers */}
-                    {Array.from({ length: 12 }).map((_, i) => {
-                        const angle = (i * Math.PI) / 6
-                        const radius = 0.28
-                        const isMain = i % 3 === 0
-                        return (
-                            <mesh
-                                key={i}
-                                position={[Math.sin(angle) * radius, Math.cos(angle) * radius, 0.002]}
-                            >
-                                <circleGeometry args={[isMain ? 0.02 : 0.012, 16]} />
-                                <meshStandardMaterial color="#1a1a1a" />
-                            </mesh>
-                        )
-                    })}
-                    {/* Hour Hand */}
-                    <mesh position={[0, 0.08, 0.003]} rotation={[0, 0, Math.PI / 6]}>
-                        <boxGeometry args={[0.03, 0.16, 0.01]} />
-                        <meshStandardMaterial color="#1a1a1a" />
-                    </mesh>
-                    {/* Minute Hand */}
-                    <mesh position={[0, 0.12, 0.004]} rotation={[0, 0, -Math.PI / 3]}>
-                        <boxGeometry args={[0.025, 0.24, 0.008]} />
-                        <meshStandardMaterial color="#1a1a1a" />
-                    </mesh>
-                    {/* Second Hand */}
-                    <mesh position={[0, 0.1, 0.005]} rotation={[0, 0, Math.PI / 4]}>
-                        <boxGeometry args={[0.015, 0.22, 0.006]} />
-                        <meshStandardMaterial color="#e53935" />
-                    </mesh>
-                    {/* Center Cap */}
-                    <mesh position={[0, 0, 0.006]}>
-                        <circleGeometry args={[0.025, 32]} />
-                        <meshStandardMaterial color="#1a1a1a" />
-                    </mesh>
-                </group>
+                <ClockModel />
 
                 {/* Small Bookshelf on floor */}
                 <group position={[0.5, 0.4, 0]}>
