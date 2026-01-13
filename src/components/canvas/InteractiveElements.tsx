@@ -3,7 +3,26 @@ import { useState } from 'react'
 
 function GoogleModel() {
     const { scene } = useGLTF('/models/google/scene.gltf')
-    return <primitive object={scene} position={[2.9, 1.8, 0]} scale={0.075} rotation={[0, -Math.PI / 2, 0]} />
+    const [ledsOn, setLedsOn] = useState(true)
+    
+    const ledColors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ff8800', '#8800ff', '#00ff88', '#ff0088', '#88ff00', '#0088ff', '#ff4444', '#44ff44', '#4444ff', '#ffaa00', '#aa00ff', '#00ffaa', '#ff00aa', '#aaff00']
+    
+    return (
+        <group onClick={(e) => { e.stopPropagation(); setLedsOn(!ledsOn) }}>
+            <primitive object={scene} position={[2.9, 1.8, 0]} scale={0.075} rotation={[0, -Math.PI / 2, 0]} />
+            {ledColors.map((color, i) => {
+                const angle = (i * Math.PI * 2) / ledColors.length
+                const radius = 0.4
+                return (
+                    <mesh key={i} position={[2.85, 1.8 + Math.sin(angle) * radius, Math.cos(angle) * radius]}>
+                        <sphereGeometry args={[0.02]} />
+                        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={ledsOn ? 2 : 0} />
+                        {ledsOn && <pointLight color={color} intensity={1} distance={0.3} />}
+                    </mesh>
+                )
+            })}
+        </group>
+    )
 }
 
 export const InteractiveElements = () => {
