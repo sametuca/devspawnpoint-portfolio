@@ -22,6 +22,7 @@ export const Desk = () => {
 
     const { scene: santaModel } = useGLTF('/models/christimas/scene.gltf')
     const { scene: steamController } = useGLTF('/models/steamController/scene.gltf')
+    const { scene: gamingChair } = useGLTF('/models/gamingChair/scene.gltf')
     const { setMusicActive } = useMusic()
 
 
@@ -84,8 +85,8 @@ export const Desk = () => {
                 <meshStandardMaterial color="#5d4037" roughness={0.6} />
             </mesh>
 
-            {/* Gamer Chair */}
-            <Chair position={[0, 0, 1.5]} rotation={[0, -Math.PI / 1.1, 0]} />
+            {/* Gaming Chair */}
+            <primitive object={gamingChair} position={[0, 0, 1.5]} scale={0.6} rotation={[0, -Math.PI / 1.1, 0]} />
 
             {/* Side Desk (L-part) */}
             <mesh position={[1.5, 0.7, 1.25]} receiveShadow castShadow>
