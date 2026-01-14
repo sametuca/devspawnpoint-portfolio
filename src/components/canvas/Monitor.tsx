@@ -3,7 +3,7 @@ import { Text, Image, Html } from '@react-three/drei'
 import { useOverlay } from '../../context/OverlayContext'
 import { useMusic } from '../../context/MusicContext'
 import { MatrixScreen } from './MatrixScreen'
-import * as THREE from 'three'
+// import * as THREE from 'three' // Removed unused import
 
 type MonitorProps = {
     position?: [number, number, number]
@@ -62,7 +62,7 @@ export const Monitor = ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1,
     const [gameActive, setGameActive] = useState(false)
     const [snake, setSnake] = useState([{ x: 10, y: 10 }])
     const [food, setFood] = useState({ x: 15, y: 15 })
-    const [direction, setDirection] = useState({ x: 0, y: 0 })
+    // const [direction, setDirection] = useState({ x: 0, y: 0 }) // Removed unused state
     const [score, setScore] = useState(0)
     const directionRef = useRef({ x: 0, y: 0 })
 
@@ -115,7 +115,7 @@ export const Monitor = ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1,
                 if (head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 20 || prev.some(s => s.x === head.x && s.y === head.y)) {
                     setGameActive(false)
                     setSnake([{ x: 10, y: 10 }])
-                    setDirection({ x: 0, y: 0 })
+                    // setDirection({ x: 0, y: 0 })
                     directionRef.current = { x: 0, y: 0 }
                     setScore(0)
                     return [{ x: 10, y: 10 }]
@@ -241,19 +241,25 @@ export const Monitor = ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1,
                 {type === 'web' && !gameActive && (
                     <group position={[0, 0, 0.07]}>
                         <DesktopIcon
-                            position={[-0.5, 0.2, 0]}
+                            position={[-0.6, 0.2, 0]}
                             iconUrl="/textures/logos/githublogo.png"
                             label="GitHub"
                             onClick={() => window.open('https://github.com/sametuca', '_blank')}
                         />
                         <DesktopIcon
-                            position={[0, 0.2, 0]}
+                            position={[-0.2, 0.2, 0]}
                             iconUrl="/textures/logos/mediumlogo.png"
                             label="Medium"
                             onClick={() => window.open('https://medium.com/@sametuca', '_blank')}
                         />
                         <DesktopIcon
-                            position={[0.5, 0.2, 0]}
+                            position={[0.2, 0.2, 0]}
+                            iconUrl="/textures/logos/certificatelogo.png"
+                            label="Certificate"
+                            onClick={() => setOverlay('certificates')}
+                        />
+                        <DesktopIcon
+                            position={[0.6, 0.2, 0]}
                             iconUrl="/textures/logos/contactlogo.png"
                             label="About"
                             onClick={() => setOverlay('contact')}

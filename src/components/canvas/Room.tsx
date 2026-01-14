@@ -40,8 +40,13 @@ function PlayStation5() {
 function Window3D() {
     const { scene } = useGLTF('/models/window/scene.gltf')
     return <primitive object={scene.clone()}
-        position={[0, 0.1, 0.02]}
-        scale={0.02} rotation={[0, -Math.PI / 2, 0]} />
+        position={[0, 0.1, 0]}
+        scale={0.02} rotation={[0, 0, 0]} />
+}
+
+function Cheetos() {
+    const { scene } = useGLTF('/models/cheetos/scene.gltf')
+    return <primitive object={scene.clone()} position={[1.55, -1.02, 1.1]} scale={0.07} rotation={[0, Math.PI / 4, 0]} />
 }
 
 export const Room = () => {
@@ -243,21 +248,23 @@ export const Room = () => {
                 </mesh>
 
                 {/* Window (Positioned toward back Z) */}
-                <group position={[-1.5, 0, 0]}>
-                    {/* Outdoor View - sized to fit window */}
-                    <mesh position={[0, 0.1, -0.03]}>
-                        <planeGeometry args={[1.2, 0.9]} />
-                        <meshBasicMaterial map={outdoorTexture} />
-                    </mesh>
-                    {/* Snowflakes - contained within window area */}
-                    {snowflakes.map((flake, i) => (
-                        <mesh key={i} position={[flake.x * 0.6, flake.y * 0.7 + 0.1, -0.04 + flake.z]}>
-                            <circleGeometry args={[flake.size * 0.7, 6]} />
-                            <meshBasicMaterial color="#ffffff" transparent opacity={0.9} side={THREE.DoubleSide} />
+                <group position={[0.5, 0, 0]}>
+                    <group position={[-1.5, 0.1, 0]}>
+                        {/* Outdoor View - sized to fit window */}
+                        <mesh position={[0, 0, -0.03]}>
+                            <planeGeometry args={[1.2, 0.9]} />
+                            <meshBasicMaterial map={outdoorTexture} />
                         </mesh>
-                    ))}
-                    {/* 3D Window Model */}
-                    <Window3D />
+                        {/* Snowflakes - contained within window area */}
+                        {snowflakes.map((flake, i) => (
+                            <mesh key={i} position={[flake.x * 0.6, flake.y * 0.7, -0.04 + flake.z]}>
+                                <circleGeometry args={[flake.size * 0.7, 6]} />
+                                <meshBasicMaterial color="#ffffff" transparent opacity={0.9} side={THREE.DoubleSide} />
+                            </mesh>
+                        ))}
+                        {/* 3D Window Model */}
+                        <Window3D />
+                    </group>
                 </group>
 
                 {/* TV (Positioned toward front Z) - CLICKABLE */}
@@ -353,6 +360,9 @@ export const Room = () => {
                     <cylinderGeometry args={[0.03, 0.03, 0.1, 12]} />
                     <meshStandardMaterial color="#e74c3c" />
                 </mesh>
+
+                {/* Cheetos */}
+                <Cheetos />
             </group>
 
         </group>

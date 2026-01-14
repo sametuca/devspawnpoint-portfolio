@@ -1,0 +1,11 @@
+Model Information:
+* title:	Xiaomi scooter
+* source:	https://sketchfab.com/3d-models/xiaomi-scooter-d842de8a5eea486598acc0b94fdc0119
+* author:	RES1N (https://sketchfab.com/Resinnnn)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Xiaomi scooter" (https://sketchfab.com/3d-models/xiaomi-scooter-d842de8a5eea486598acc0b94fdc0119) by RES1N (https://sketchfab.com/Resinnnn) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

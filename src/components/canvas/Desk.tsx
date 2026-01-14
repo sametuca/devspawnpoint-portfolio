@@ -71,6 +71,8 @@ export const Desk = () => {
     const { scene: iphoneModel } = useGLTF('/models/iphone/scene.gltf')
     const { scene: mouseModel } = useGLTF('/models/cp-mouse/scene.gltf')
     const { scene: keyboardModel } = useGLTF('/models/cp-keyboard/scene.gltf')
+    const { scene: headphonesModel } = useGLTF('/models/headphones/scene.gltf')
+    const { scene: glassesModel } = useGLTF('/models/glasses/scene.gltf')
     const { setMusicActive } = useMusic()
 
 
@@ -204,6 +206,10 @@ export const Desk = () => {
             {/* iPhone Model */}
             <primitive object={iphoneModel.clone()} position={[-0.5, 0.77, 0.55]} scale={0.01} rotation={[-Math.PI / 2, 0, 0.2]} />
 
+            {/* Glasses Model */}
+            <primitive object={glassesModel.clone()} position={[1.75, 0.76, 0.5]}
+                scale={2.0} rotation={[0, 0.3, 0]} />
+
             {/* 3D Coffee Cup Model */}
             <group onClick={(e) => { e.stopPropagation(); handleCupClick() }}>
                 <primitive
@@ -228,83 +234,6 @@ export const Desk = () => {
                 scale={0.15}
                 rotation={[0, -0.8, 0]}
             />
-
-
-
-            {/* Improved Headphones (Gaming Style) - Standing on Desk */}
-            <group position={[-1.0, 0.76, 0.3]} onClick={(e) => { e.stopPropagation(); setMusicActive(true) }}>
-                {/* Headphone Stand Base */}
-                <mesh position={[0, 0.02, 0]}>
-                    <cylinderGeometry args={[0.08, 0.1, 0.04, 16]} />
-                    <meshStandardMaterial color="#1a1a1a" metalness={0.7} roughness={0.3} />
-                </mesh>
-                {/* Stand Pole */}
-                <mesh position={[0, 0.15, 0]}>
-                    <cylinderGeometry args={[0.015, 0.015, 0.3, 12]} />
-                    <meshStandardMaterial color="#222" metalness={0.8} roughness={0.2} />
-                </mesh>
-                {/* Stand Hook */}
-                <mesh position={[0, 0.3, 0]} rotation={[0, 0, Math.PI / 2]}>
-                    <torusGeometry args={[0.06, 0.012, 8, 16, Math.PI]} />
-                    <meshStandardMaterial color="#1a1a1a" metalness={0.7} roughness={0.3} />
-                </mesh>
-                {/* Headphones hanging on stand */}
-                <group position={[0, 0.28, 0]} rotation={[0.1, 0, 0]}>
-                    {/* Headband */}
-                    <mesh>
-                        <torusGeometry args={[0.09, 0.012, 12, 24, Math.PI]} />
-                        <meshStandardMaterial color="#1a1a1a" metalness={0.6} roughness={0.3} />
-                    </mesh>
-                    {/* Headband Padding */}
-                    <mesh position={[0, 0.008, 0]}>
-                        <torusGeometry args={[0.09, 0.008, 8, 16, Math.PI]} />
-                        <meshStandardMaterial color="#333" />
-                    </mesh>
-                    {/* Left Ear Cup */}
-                    <group position={[-0.09, -0.05, 0]}>
-                        <mesh>
-                            <cylinderGeometry args={[0.05, 0.05, 0.03, 24]} />
-                            <meshStandardMaterial color="#111" metalness={0.4} roughness={0.4} />
-                        </mesh>
-                        {/* Ear Cushion */}
-                        <mesh position={[0, 0.018, 0]}>
-                            <torusGeometry args={[0.035, 0.01, 8, 16]} />
-                            <meshStandardMaterial color="#2a2a2a" />
-                        </mesh>
-                        {/* RGB Accent */}
-                        <mesh position={[0, -0.018, 0]}>
-                            <cylinderGeometry args={[0.04, 0.04, 0.003, 24]} />
-                            <meshStandardMaterial color="#ff0066" emissive="#ff0066" emissiveIntensity={0.5} />
-                        </mesh>
-                    </group>
-                    {/* Right Ear Cup */}
-                    <group position={[0.09, -0.05, 0]}>
-                        <mesh>
-                            <cylinderGeometry args={[0.05, 0.05, 0.03, 24]} />
-                            <meshStandardMaterial color="#111" metalness={0.4} roughness={0.4} />
-                        </mesh>
-                        {/* Ear Cushion */}
-                        <mesh position={[0, 0.018, 0]}>
-                            <torusGeometry args={[0.035, 0.01, 8, 16]} />
-                            <meshStandardMaterial color="#2a2a2a" />
-                        </mesh>
-                        {/* RGB Accent */}
-                        <mesh position={[0, -0.018, 0]}>
-                            <cylinderGeometry args={[0.04, 0.04, 0.003, 24]} />
-                            <meshStandardMaterial color="#00ffff" emissive="#00ffff" emissiveIntensity={0.5} />
-                        </mesh>
-                    </group>
-                    {/* Microphone Boom */}
-                    <mesh position={[-0.09, -0.05, 0.04]} rotation={[0, 0, -Math.PI / 6]}>
-                        <cylinderGeometry args={[0.004, 0.004, 0.1, 8]} />
-                        <meshStandardMaterial color="#222" metalness={0.8} />
-                    </mesh>
-                    <mesh position={[-0.14, -0.08, 0.04]}>
-                        <sphereGeometry args={[0.008, 8, 8]} />
-                        <meshStandardMaterial color="#333" />
-                    </mesh>
-                </group>
-            </group>
 
             {/* Notebook + Pen */}
             <mesh position={[-0.5, 0.76, 0.6]} rotation={[0, 0.2, 0]}>

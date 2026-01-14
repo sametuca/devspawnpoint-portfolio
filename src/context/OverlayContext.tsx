@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from 'react'
 
-type OverlayType = 'none' | 'projects' | 'cv' | 'contact' | 'terminal'
+type OverlayType = 'none' | 'projects' | 'cv' | 'contact' | 'terminal' | 'certificates'
 
 interface OverlayContextType {
     overlay: OverlayType

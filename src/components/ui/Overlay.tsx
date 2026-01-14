@@ -95,6 +95,74 @@ export const Overlay = () => {
                 </div>
             </div>
         ),
+        certificates: (
+            <div className="p-8">
+                <h2 className="text-4xl font-bold mb-6 text-yellow-500">CERTIFICATES</h2>
+                <div className="space-y-4">
+                    {[
+                        {
+                            title: "Back-End Development with .NET",
+                            issuer: "Microsoft",
+                            date: "Mar 2025",
+                            id: "IQX9NXOB0PSW",
+                            color: "text-blue-400",
+                            border: "border-blue-500/30"
+                        },
+                        {
+                            title: "Full-Stack Development",
+                            issuer: "Microsoft",
+                            date: "Mar 2025",
+                            id: "OOTDG9SY4PVM",
+                            color: "text-blue-400",
+                            border: "border-blue-500/30"
+                        },
+                        {
+                            title: "Introduction to Software Engineering (Honors)",
+                            issuer: "IBM",
+                            date: "Mar 2025",
+                            id: "QM7QEY3ZF14X",
+                            color: "text-indigo-400",
+                            border: "border-indigo-500/30"
+                        },
+                        {
+                            title: "Back-End Development",
+                            issuer: "Meta",
+                            date: "Aug 2023",
+                            id: "G64JYK478BF8",
+                            skills: ["ASP NET Core", "JavaScript", "C#"],
+                            color: "text-cyan-400",
+                            border: "border-cyan-500/30"
+                        },
+                        {
+                            title: "Problem Solving Certificate",
+                            issuer: "HackerRank",
+                            date: "May 2023",
+                            id: "b36dcaeda104",
+                            color: "text-green-400",
+                            border: "border-green-500/30"
+                        }
+                    ].map((cert, i) => (
+                        <div key={i} className={`bg-black/50 p-5 border ${cert.border} rounded-lg group hover:bg-black/70 transition`}>
+                            <div>
+                                <h3 className={`text-xl font-bold ${cert.color}`}>{cert.title}</h3>
+                                <p className="text-white text-sm font-medium">{cert.issuer}</p>
+                                <p className="text-gray-400 text-xs mt-1">Issued {cert.date}</p>
+                                <p className="text-gray-500 text-xs">Credential ID {cert.id}</p>
+                                {cert.skills && (
+                                    <div className="flex gap-2 mt-3">
+                                        {cert.skills.map(skill => (
+                                            <span key={skill} className="text-[10px] bg-gray-800 text-gray-300 px-2 py-0.5 rounded border border-gray-700">
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        ),
         terminal: <GeminiTerminal />,
         none: null
     }

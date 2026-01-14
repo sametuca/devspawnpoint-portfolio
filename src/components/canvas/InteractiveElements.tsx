@@ -1,6 +1,19 @@
 import { useGLTF } from '@react-three/drei'
 import { useState } from 'react'
 
+function Speaker() {
+    const { scene } = useGLTF('/models/speaker/scene.gltf')
+    return <primitive object={scene.clone()} position={[1.5, 0, 0]}
+        scale={1.15} rotation={[0, 4.65, 0]} />
+}
+
+function Server3D() {
+    const { scene } = useGLTF('/models/server/scene.gltf')
+    return <primitive object={scene.clone()} position={[-0.20, -0.05, 0.1]} 
+    scale={0.4} rotation={[0, 0, 0]} />
+}
+
+
 function GoogleModel() {
     const { scene } = useGLTF('/models/google/scene.gltf')
     const [ledsOn, setLedsOn] = useState(true)
@@ -34,54 +47,10 @@ export const InteractiveElements = () => {
             <group position={[0, 0, 2.9]} rotation={[0, Math.PI, 0]}>
 
                 {/* Mini Server Rack */}
-                <group position={[-1.5, 0.6, 0]}>
-                    {/* Rack Frame */}
-                    <mesh position={[0, 0, 0]}>
-                        <boxGeometry args={[0.5, 1.2, 0.4]} />
-                        <meshStandardMaterial color="#1a1a1a" />
-                    </mesh>
-                    {/* Server Units (LED lights) */}
-                    {[0.4, 0.2, 0, -0.2, -0.4].map((y, i) => (
-                        <group key={i} position={[0, y, 0.21]}>
-                            <mesh>
-                                <boxGeometry args={[0.45, 0.15, 0.01]} />
-                                <meshStandardMaterial color="#222" />
-                            </mesh>
-                            {/* Blinking LEDs */}
-                            <mesh position={[0.15, 0, 0.01]}>
-                                <sphereGeometry args={[0.015]} />
-                                <meshStandardMaterial color={i % 2 === 0 ? "#00ff00" : "#ff0000"} emissive={i % 2 === 0 ? "#00ff00" : "#ff0000"} emissiveIntensity={2} />
-                            </mesh>
-                        </group>
-                    ))}
-                </group>
+                <Server3D />
 
-                {/* Potted Plant */}
-                <group position={[1.5, 0.125, 0]}>
-                    {/* Pot */}
-                    <mesh position={[0, 0, 0]}>
-                        <cylinderGeometry args={[0.12, 0.1, 0.25, 12]} />
-                        <meshStandardMaterial color="#8B4513" />
-                    </mesh>
-                    {/* Soil */}
-                    <mesh position={[0, 0.15, 0]}>
-                        <cylinderGeometry args={[0.1, 0.1, 0.05, 12]} />
-                        <meshStandardMaterial color="#3d2314" />
-                    </mesh>
-                    {/* Plant Leaves (simple spheres) */}
-                    <mesh position={[0, 0.35, 0]}>
-                        <sphereGeometry args={[0.15, 8, 8]} />
-                        <meshStandardMaterial color="#228B22" />
-                    </mesh>
-                    <mesh position={[0.08, 0.45, 0.05]}>
-                        <sphereGeometry args={[0.1, 8, 8]} />
-                        <meshStandardMaterial color="#2E8B57" />
-                    </mesh>
-                    <mesh position={[-0.08, 0.4, -0.05]}>
-                        <sphereGeometry args={[0.12, 8, 8]} />
-                        <meshStandardMaterial color="#32CD32" />
-                    </mesh>
-                </group>
+                {/* Speaker */}
+                <Speaker />
 
 
 

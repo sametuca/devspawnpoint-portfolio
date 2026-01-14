@@ -1,0 +1,8 @@
+Model Information:
+* title:	Xiaomi 4K 27 monitor
+* source:	https://sketchfab.com/3d-models/xiaomi-4k-27-monitor-02d26c622f9d4dc59ae76a103954256f
+* author:	Shadow (https://sketchfab.com/Shadow-S)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Xiaomi Mi Robot Vacuum Cleaner
+* source:	https://sketchfab.com/3d-models/xiaomi-mi-robot-vacuum-cleaner-f5e4cdf09bc84305b6dd0e5e5316db61
+* author:	tonielpro520 (https://sketchfab.com/tonielpro520)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Xiaomi Mi Robot Vacuum Cleaner" (https://sketchfab.com/3d-models/xiaomi-mi-robot-vacuum-cleaner-f5e4cdf09bc84305b6dd0e5e5316db61) by tonielpro520 (https://sketchfab.com/tonielpro520) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -1,0 +1,11 @@
+Model Information:
+* title:	cheetos
+* source:	https://sketchfab.com/3d-models/cheetos-5a10f6c5436640058686c76f84da01f1
+* author:	jomytfj (https://sketchfab.com/jomytfj)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "cheetos" (https://sketchfab.com/3d-models/cheetos-5a10f6c5436640058686c76f84da01f1) by jomytfj (https://sketchfab.com/jomytfj) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
