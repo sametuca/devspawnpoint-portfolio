@@ -1,5 +1,17 @@
 # React + TypeScript + Vite
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/10a6a2f3-5ab6-4c18-bc1d-7111c2c644f3/deploy-status)](https://app.netlify.com/projects/developerspawnpoint/deploys)
+
+## Screenshots
+
+![Screenshot 1](screenshots/screenshot-1.png)
+*Interactive 3D workspace environment*
+
+![Screenshot 2](screenshots/screenshot-2.png)
+*Dark mode view with ambient lighting*
+
+## About
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
