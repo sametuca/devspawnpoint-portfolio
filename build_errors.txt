@@ -1,0 +1,9 @@
+﻿
+> portfolio-3d@0.0.0 build
+> tsc -b && vite build
+
+src/components/canvas/Desk.tsx(1,1): error TS6133: 'Monitor' is declared but its value is never read.
+src/components/canvas/Desk.tsx(3,1): error TS6133: 'Chair' is declared but its value is never read.
+src/components/canvas/Desk.tsx(7,29): error TS6133: 'useRef' is declared but its value is never read.
+src/components/canvas/Desk.tsx(199,11): error TS6133: 'setMusicActive' is declared but its value is never read.
+src/context/MusicContext.tsx(1,47): error TS1484: 'ReactNode' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.

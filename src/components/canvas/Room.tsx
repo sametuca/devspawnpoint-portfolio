@@ -34,20 +34,48 @@ function CeilingLamp({ lightsOn, onClick }: { lightsOn: boolean; onClick: (e: an
 
 function PlayStation5() {
     const { scene } = useGLTF('/models/playstation_5/scene.gltf')
-    return <primitive object={scene.clone()} position={[2.3, -0.30, 0.25]} scale={0.15} rotation={[0, Math.PI / 2, 0]} />
+    return <primitive object={scene.clone()} position={[1.8, -0.85, 0.20]} scale={0.15} rotation={[0, Math.PI / 2, 0]} />
+}
+
+function TVTable() {
+    const { scene } = useGLTF('/models/tv_table/scene.gltf')
+    return <primitive object={scene.clone()} position={[1.5, -1.5, -0.85]} scale={1.2} rotation={[0, Math.PI / 1, 0]} />
+}
+
+function Door3D() {
+    const { scene } = useGLTF('/models/door/scene.gltf')
+    return <primitive object={scene.clone()} position={[2.1, 1.5, -2.9]} scale={0.25} rotation={[0, 0, 0]} />
 }
 
 function Window3D() {
     const { scene } = useGLTF('/models/window/scene.gltf')
     return <primitive object={scene.clone()}
-        position={[0, 0.1, 0]}
-        scale={0.02} rotation={[0, 0, 0]} />
+        position={[2, -1.5, 1.7]}
+        scale={0.03}
+        rotation={[0, Math.PI / -2, 0]} />
 }
 
 function Cheetos() {
     const { scene } = useGLTF('/models/cheetos/scene.gltf')
     return <primitive object={scene.clone()} position={[1.55, -1.02, 1.1]} scale={0.07} rotation={[0, Math.PI / 4, 0]} />
 }
+
+function VacuumRobot() {
+    const { scene } = useGLTF('/models/vacuum-robot/scene.gltf')
+    return <primitive object={scene.clone()} position={[2, 0.05, -2.2]}
+        scale={1.15} rotation={[0, Math.PI / 4, 0]} />
+}
+
+function XiaomiScooter() {
+    const { scene } = useGLTF('/models/xiaomi_scooter/scene.gltf')
+    return <primitive object={scene.clone()} position={[0.5, 0, -2.5]} scale={1.5} rotation={[0, Math.PI / 6, 0]} />
+}
+
+function Dumbbell() {
+    const { scene } = useGLTF('/models/dambil/scene.gltf')
+    return <primitive object={scene.clone()} position={[-2.5, 0.15, 0.5]} scale={0.05} rotation={[0, Math.PI / 3, 0]} />
+}
+
 
 export const Room = () => {
     const wallMaterial = new THREE.MeshStandardMaterial({ color: "#e0e0e0", roughness: 0.8 })
@@ -128,14 +156,16 @@ export const Room = () => {
                     <primitive object={wallMaterial} />
                 </mesh>
                 {/* Door */}
-                <mesh position={[2, 1, -2.95]}>
-                    <boxGeometry args={[0.9, 2.60, 0.1]} />
-                    <meshStandardMaterial color="#4d3b3b" />
-                </mesh>
-                <mesh position={[2.35, 1, -2.9]}>
-                    <sphereGeometry args={[0.05]} />
-                    <meshStandardMaterial color="gold" />
-                </mesh>
+                <Door3D />
+
+                {/* Vacuum Robot in front of door */}
+                <VacuumRobot />
+
+                {/* Xiaomi Scooter near back wall */}
+                <XiaomiScooter />
+
+                {/* Dumbbell near left wall */}
+                <Dumbbell />
 
                 {/* Navigation Instructions Panel */}
                 <group position={[0.5, 1.95, -2.9]}>
@@ -248,16 +278,16 @@ export const Room = () => {
                 </mesh>
 
                 {/* Window (Positioned toward back Z) */}
-                <group position={[0.5, 0, 0]}>
+                <group position={[0.6, 0, 0]}>
                     <group position={[-1.5, 0.1, 0]}>
                         {/* Outdoor View - sized to fit window */}
                         <mesh position={[0, 0, -0.03]}>
-                            <planeGeometry args={[1.2, 0.9]} />
+                            <planeGeometry args={[1, 1.7]} />
                             <meshBasicMaterial map={outdoorTexture} />
                         </mesh>
                         {/* Snowflakes - contained within window area */}
                         {snowflakes.map((flake, i) => (
-                            <mesh key={i} position={[flake.x * 0.6, flake.y * 0.7, -0.04 + flake.z]}>
+                            <mesh key={i} position={[flake.x * 0.6, flake.y * 0.7, -0.12 + flake.z]}>
                                 <circleGeometry args={[flake.size * 0.7, 6]} />
                                 <meshBasicMaterial color="#ffffff" transparent opacity={0.9} side={THREE.DoubleSide} />
                             </mesh>
@@ -282,20 +312,12 @@ export const Room = () => {
                         <planeGeometry args={[1.5, 0.9]} />
                         <meshBasicMaterial map={marioTexture} />
                     </mesh>
-                    {/* TV Stand */}
-                    <mesh position={[0, -0.6, 0.1]}>
-                        <boxGeometry args={[0.3, 0.15, 0.2]} />
-                        <meshStandardMaterial color="#222" />
-                    </mesh>
                 </group>
 
-                {/* TV Cabinet / Entertainment Unit */}
-                <mesh position={[1.5, -0.5, 0.1]}>
-                    <boxGeometry args={[1.8, 0.4, 0.5]} />
-                    <meshStandardMaterial color="#3d2314" />
-                </mesh>
+                {/* TV Table / Entertainment Unit */}
+                <TVTable />
 
-                {/* Game Console (PlayStation 5) */}
+                {/* Game Console (PlayStation 5) on TV Table */}
                 <PlayStation5 />
 
                 {/* ===== GAMING AREA ===== */}
@@ -326,32 +348,6 @@ export const Room = () => {
                     <mesh position={[0.35, -0.15, -0.2]}>
                         <boxGeometry args={[0.05, 0.25, 0.05]} />
                         <meshStandardMaterial color="#3e2723" />
-                    </mesh>
-                </group>
-
-                {/* Snack Bowl 1 (Chips) */}
-                <group position={[1.3, -1.05, 0.9]}>
-                    <mesh>
-                        <cylinderGeometry args={[0.1, 0.08, 0.06, 16]} />
-                        <meshStandardMaterial color="#e67e22" />
-                    </mesh>
-                    {/* Chips inside */}
-                    <mesh position={[0, 0.04, 0]}>
-                        <sphereGeometry args={[0.07, 8, 8, 0, Math.PI * 2, 0, Math.PI / 2]} />
-                        <meshStandardMaterial color="#f39c12" />
-                    </mesh>
-                </group>
-
-                {/* Snack Bowl 2 (Popcorn) */}
-                <group position={[1.7, -1.05, 0.85]}>
-                    <mesh>
-                        <cylinderGeometry args={[0.08, 0.06, 0.08, 16]} />
-                        <meshStandardMaterial color="#c0392b" />
-                    </mesh>
-                    {/* Popcorn inside */}
-                    <mesh position={[0, 0.05, 0]}>
-                        <sphereGeometry args={[0.06, 8, 8, 0, Math.PI * 2, 0, Math.PI / 2]} />
-                        <meshStandardMaterial color="#ecf0f1" />
                     </mesh>
                 </group>
 

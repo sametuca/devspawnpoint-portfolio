@@ -10,6 +10,9 @@ import { MusicProvider } from './context/MusicContext'
 import { Overlay } from './components/ui/Overlay'
 import { LoadingScreen } from './components/ui/LoadingScreen'
 
+// Preload models for faster loading
+import './utils/preloadModels'
+
 function App() {
   return (
     <OverlayProvider>

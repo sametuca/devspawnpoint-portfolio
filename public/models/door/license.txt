@@ -1,0 +1,11 @@
+Model Information:
+* title:	White Wooden Door
+* source:	https://sketchfab.com/3d-models/white-wooden-door-4dcab5536f2a43cf8b8611888380fbda
+* author:	ZiadPh (https://sketchfab.com/ZiadPh)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "White Wooden Door" (https://sketchfab.com/3d-models/white-wooden-door-4dcab5536f2a43cf8b8611888380fbda) by ZiadPh (https://sketchfab.com/ZiadPh) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

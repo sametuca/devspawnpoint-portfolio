@@ -204,6 +204,11 @@ export const Monitor = ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1,
                 {/* Desktop Icons - Code Monitor (Tech Logos) */}
                 {type === 'code' && !gameActive && !musicActive && (
                     <group position={[0, 0, 0.07]}>
+                        {/* Black Desktop Background */}
+                        <mesh position={[0, 0, -0.001]}>
+                            <planeGeometry args={[1.7, 0.9]} />
+                            <meshBasicMaterial color="#000000" />
+                        </mesh>
                         <DesktopIcon
                             position={[-0.6, 0.25, 0]}
                             iconUrl="/textures/logos/reactlogo.webp"
@@ -240,6 +245,11 @@ export const Monitor = ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1,
                 {/* Desktop Icons - Web Monitor (GitHub & Medium) */}
                 {type === 'web' && !gameActive && (
                     <group position={[0, 0, 0.07]}>
+                        {/* Black Desktop Background */}
+                        <mesh position={[0, 0, -0.001]}>
+                            <planeGeometry args={[1.7, 0.9]} />
+                            <meshBasicMaterial color="#000000" />
+                        </mesh>
                         <DesktopIcon
                             position={[-0.6, 0.2, 0]}
                             iconUrl="/textures/logos/githublogo.png"
@@ -322,27 +332,27 @@ export const Monitor = ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1,
                 {/* Taskbar (bottom of screen) */}
                 {screenData.wallpaper && (
                     <>
-                        <mesh position={[0, -0.42, 0.065]}>
+                        <mesh position={[0, -0.35, 0.065]}>
                             <planeGeometry args={[1.7, 0.06]} />
                             <meshBasicMaterial color="#1f1f1f" opacity={0.95} transparent />
                         </mesh>
                         {/* Start Button */}
-                        <mesh position={[-0.78, -0.42, 0.066]} onClick={(e) => { e.stopPropagation(); setGameActive(true) }}>
+                        <mesh position={[-0.78, -0.35, 0.066]} onClick={(e) => { e.stopPropagation(); setGameActive(true) }}>
                             <planeGeometry args={[0.12, 0.05]} />
                             <meshBasicMaterial color="#0078d4" />
                         </mesh>
-                        <Text position={[-0.78, -0.42, 0.067]} fontSize={0.03} color="white" anchorX="center">
+                        <Text position={[-0.78, -0.35, 0.067]} fontSize={0.03} color="white" anchorX="center">
                             ⊞
                         </Text>
                         {/* Taskbar Icons */}
                         {[-0.6, -0.5, -0.4].map((x, i) => (
-                            <mesh key={i} position={[x, -0.42, 0.066]}>
+                            <mesh key={i} position={[x, -0.35, 0.066]}>
                                 <planeGeometry args={[0.04, 0.04]} />
                                 <meshBasicMaterial color={['#e74c3c', '#3498db', '#2ecc71'][i]} />
                             </mesh>
                         ))}
                         {/* System Tray */}
-                        <Text position={[0.75, -0.42, 0.066]} fontSize={0.025} color="#ccc" anchorX="right">
+                        <Text position={[0.75, -0.35, 0.066]} fontSize={0.025} color="#ccc" anchorX="right">
                             12:34
                         </Text>
                     </>

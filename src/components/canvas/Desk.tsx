@@ -1,11 +1,8 @@
-import { Monitor } from './Monitor'
 import { useGLTF, Text, Image } from '@react-three/drei'
-import { Chair } from './Chair'
 import { useLoader, useFrame } from '@react-three/fiber'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import * as THREE from 'three'
-import { useMemo, useState, useRef } from 'react'
-import { useMusic } from '../../context/MusicContext'
+import { useMemo, useState } from 'react'
 import { useOverlay } from '../../context/OverlayContext'
 
 // MacBook component with Gemini app
@@ -51,6 +48,131 @@ function MacBook({ position, rotation, scale }: { position: [number, number, num
     )
 }
 
+// Desktop Icon Component for Xiaomi Monitor
+const XiaomiDesktopIcon = ({
+    position,
+    iconUrl,
+    label,
+    onClick
+}: {
+    position: [number, number, number],
+    iconUrl: string,
+    label: string,
+    onClick: () => void
+}) => {
+    const [hovered, setHover] = useState(false)
+
+    return (
+        <group
+            position={position}
+            onClick={(e) => { e.stopPropagation(); onClick() }}
+            onPointerOver={() => setHover(true)}
+            onPointerOut={() => setHover(false)}
+        >
+            {hovered && (
+                <mesh position={[0, 0, -0.001]}>
+                    <planeGeometry args={[0.2, 0.25]} />
+                    <meshBasicMaterial color="#4488ff" transparent opacity={0.3} />
+                </mesh>
+            )}
+            <Image url={iconUrl} scale={0.12} position={[0, 0.04, 0]} transparent />
+            <Text
+                fontSize={0.03}
+                color="white"
+                position={[0, -0.06, 0]}
+                anchorX="center"
+                outlineWidth={0.002}
+                outlineColor="#000"
+            >
+                {label}
+            </Text>
+        </group>
+    )
+}
+
+// Xiaomi 4K Monitor component
+function XiaomiMonitor({ position, rotation, scale }: { position: [number, number, number], rotation: [number, number, number], scale: number }) {
+    const { scene } = useGLTF('/models/xiaomi_4k_27_monitor/scene.gltf')
+    const { setOverlay } = useOverlay()
+
+    return (
+        <group position={position} rotation={rotation} scale={scale}>
+            <primitive object={scene.clone()} scale={3.015} position={[0, 0.3, 0]} />
+            {/* Screen Content - Desktop Icons */}
+            <group position={[0, 0.3, 0.08]}>
+                <XiaomiDesktopIcon
+                    position={[-0.5, 0.15, 0]}
+                    iconUrl="/textures/logos/githublogo.png"
+                    label="GitHub"
+                    onClick={() => window.open('https://github.com/sametuca', '_blank')}
+                />
+                <XiaomiDesktopIcon
+                    position={[-0.15, 0.15, 0]}
+                    iconUrl="/textures/logos/mediumlogo.png"
+                    label="Medium"
+                    onClick={() => window.open('https://medium.com/@sametuca', '_blank')}
+                />
+                <XiaomiDesktopIcon
+                    position={[0.2, 0.15, 0]}
+                    iconUrl="/textures/logos/certificatelogo.png"
+                    label="Certificate"
+                    onClick={() => setOverlay('certificates')}
+                />
+                <XiaomiDesktopIcon
+                    position={[0.55, 0.15, 0]}
+                    iconUrl="/textures/logos/contactlogo.png"
+                    label="About"
+                    onClick={() => setOverlay('contact')}
+                />
+            </group>
+        </group>
+    )
+}
+
+// Xiaomi Code Monitor component - for tech stack icons
+function XiaomiCodeMonitor({ position, rotation, scale }: { position: [number, number, number], rotation: [number, number, number], scale: number }) {
+    const { scene } = useGLTF('/models/xiaomi_4k_27_monitor/scene.gltf')
+
+    return (
+        <group position={position} rotation={rotation} scale={scale}>
+            <primitive object={scene.clone()} scale={3.015} position={[0, 0.3, 0]} />
+            {/* Screen Content - Tech Stack Icons */}
+            <group position={[0, 0.3, 0.08]}>
+                <XiaomiDesktopIcon
+                    position={[-0.6, 0.2, 0]}
+                    iconUrl="/textures/logos/reactlogo.webp"
+                    label="React"
+                    onClick={() => window.open('https://react.dev', '_blank')}
+                />
+                <XiaomiDesktopIcon
+                    position={[-0.25, 0.2, 0]}
+                    iconUrl="/textures/logos/typescriptlogo.png"
+                    label="TypeScript"
+                    onClick={() => window.open('https://typescriptlang.org', '_blank')}
+                />
+                <XiaomiDesktopIcon
+                    position={[0.1, 0.2, 0]}
+                    iconUrl="/textures/logos/nodejslogo.png"
+                    label="Node.js"
+                    onClick={() => window.open('https://nodejs.org', '_blank')}
+                />
+                <XiaomiDesktopIcon
+                    position={[0.45, 0.2, 0]}
+                    iconUrl="/textures/logos/threejslogo.png"
+                    label="Three.js"
+                    onClick={() => window.open('https://threejs.org', '_blank')}
+                />
+                <XiaomiDesktopIcon
+                    position={[-0.6, -0.1, 0]}
+                    iconUrl="/textures/logos/nextjslogo.webp"
+                    label="Next.js"
+                    onClick={() => window.open('https://nextjs.org', '_blank')}
+                />
+            </group>
+        </group>
+    )
+}
+
 export const Desk = () => {
 
     // Load 3D cup model
@@ -68,12 +190,9 @@ export const Desk = () => {
     const { scene: xmasTreeModel } = useGLTF('/models/xmas-tree/scene.gltf')
     const { scene: steamController } = useGLTF('/models/steamController/scene.gltf')
     const { scene: gamingChair } = useGLTF('/models/gamingChair/scene.gltf')
-    const { scene: iphoneModel } = useGLTF('/models/iphone/scene.gltf')
     const { scene: mouseModel } = useGLTF('/models/cp-mouse/scene.gltf')
     const { scene: keyboardModel } = useGLTF('/models/cp-keyboard/scene.gltf')
-    const { scene: headphonesModel } = useGLTF('/models/headphones/scene.gltf')
     const { scene: glassesModel } = useGLTF('/models/glasses/scene.gltf')
-    const { setMusicActive } = useMusic()
 
 
 
@@ -163,17 +282,16 @@ export const Desk = () => {
             </mesh>
 
             {/* Monitors */}
-            <Monitor position={[0, 1.25, 0]} scale={0.8} type="code" />
+            <XiaomiCodeMonitor position={[0, 1.25, 0]} rotation={[0, 0, 0]} scale={0.8} />
             {/* MacBook with Gemini App */}
             <MacBook
                 position={[-1.6, 0.79, 0.2]}
                 rotation={[0, 0.3, 0]}
                 scale={2.5} />
-            <Monitor
+            <XiaomiMonitor
                 position={[1.5, 1.25, 0.2]}
                 rotation={[0, -0.3, 0]}
                 scale={0.8}
-                type="web"
             />
 
             {/* PC Tower */}
@@ -203,8 +321,6 @@ export const Desk = () => {
             <primitive object={mouseModel.clone()} position={[0.55, 0.76, 0.5]}
                 scale={0.025} rotation={[0, -0, 0]} />
 
-            {/* iPhone Model */}
-            <primitive object={iphoneModel.clone()} position={[-0.5, 0.77, 0.55]} scale={0.01} rotation={[-Math.PI / 2, 0, 0.2]} />
 
             {/* Glasses Model */}
             <primitive object={glassesModel.clone()} position={[1.75, 0.76, 0.5]}
@@ -267,7 +383,7 @@ export const Desk = () => {
 
             {/* ===== CHRISTMAS TREE ===== */}
             {/* 3D Christmas Tree Model */}
-            <group position={[-2.5, 0, -2.5]} onClick={(e) => { e.stopPropagation(); setSantaFlying(true); setSantaPosition(-4) }}>
+            <group position={[-2.8, 0, -2.8]} onClick={(e) => { e.stopPropagation(); setSantaFlying(true); setSantaPosition(-4) }}>
                 <primitive
                     object={xmasTreeModel.clone()}
                     scale={0.5}
@@ -277,7 +393,7 @@ export const Desk = () => {
 
             {/* Santa Flying */}
             {santaFlying && (
-                <primitive object={santaModel.clone()} scale={0.015} position={[santaPosition, 1.5, 1.5]} rotation={[0, Math.PI / 2, 0]} />
+                <primitive object={santaModel.clone()} scale={0.015} position={[santaPosition, 1, 1.5]} rotation={[0, Math.PI / 2, 0]} />
             )}
 
             {/* Steam Controller */}
