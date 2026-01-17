@@ -180,7 +180,7 @@ export const Monitor = ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1,
                 {/* Music Player */}
                 {musicActive && type === 'code' && (
                     <group>
-                        <Html position={[0, 0, 0.07]} transform occlude distanceFactor={0.55}>
+                        <Html position={[0, 0, 0.07]} transform distanceFactor={0.55}>
                             <div style={{ width: '560px', height: '314px', background: '#000', overflow: 'hidden', pointerEvents: 'auto' }}>
                                 <iframe
                                     width="560"

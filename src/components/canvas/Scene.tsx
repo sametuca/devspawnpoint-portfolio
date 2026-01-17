@@ -7,7 +7,7 @@ export const Scene = () => {
     return (
         <>
             {/* Base Lighting - Dim and Mood Setting */}
-            <ambientLight intensity={lightsOn ? 0.5 : 0.05} color="#4a4a6adb" />
+            <ambientLight intensity={lightsOn ? 0.5 : 0.05} color="#4a4a6a" />
             <pointLight position={[0, 2, 0]} intensity={lightsOn ? 1.0 : 0} color="#faa" distance={5} />
 
             {/* Subtle Environment - Gradient background for cyberpunk atmosphere */}

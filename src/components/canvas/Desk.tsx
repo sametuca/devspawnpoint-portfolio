@@ -160,7 +160,7 @@ function XiaomiMonitor({ position, rotation, scale }: { position: [number, numbe
                 {/* YouTube Music Player - Show when music is active */}
                 {musicActive && (
                     <>
-                        <Html position={[0, 0, 0.01]} transform occlude distanceFactor={0.7}>
+                        <Html position={[0, 0, 0.01]} transform distanceFactor={0.7}>
                             <div style={{ width: '560px', height: '314px', background: '#000', overflow: 'hidden', pointerEvents: 'auto' }}>
                                 <iframe
                                     width="560"
@@ -317,7 +317,7 @@ function XiaomiCodeMonitor({ position, rotation, scale }: { position: [number, n
                 {/* YouTube Music Player - Show when music is active */}
                 {musicActive && (
                     <>
-                        <Html position={[0, 0, 0.01]} transform occlude distanceFactor={0.7}>
+                        <Html position={[0, 0, 0.01]} transform distanceFactor={0.7}>
                             <div style={{ width: '560px', height: '314px', background: '#000', overflow: 'hidden', pointerEvents: 'auto' }}>
                                 <iframe
                                     width="560"
