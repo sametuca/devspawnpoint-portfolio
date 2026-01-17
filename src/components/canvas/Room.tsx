@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { useTexture, Text, useGLTF, Html } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { DEFAULT_FONT } from '../../constants/fonts'
 
 function Armchair({ onClick }: { onClick: () => void }) {
