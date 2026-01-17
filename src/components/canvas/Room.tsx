@@ -1,30 +1,12 @@
 import * as THREE from 'three'
 import { useTexture, Text, useGLTF, Html } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { DEFAULT_FONT } from '../../constants/fonts'
 
-function Armchair({ onClick }: { onClick: () => void }) {
+function Armchair() {
     const { scene } = useGLTF('/models/armchair/scene.gltf')
-    const clonedScene = scene.clone()
-
-    // Make all meshes clickable
-    clonedScene.traverse((child: any) => {
-        if (child.isMesh) {
-            child.userData.clickable = true
-        }
-    })
-
-    return (
-        <group position={[1.5, -1.0, 1.8]} rotation={[0, Math.PI, 0]}>
-            {/* Invisible clickable box */}
-            <mesh onClick={(e) => { e.stopPropagation(); onClick(); }}>
-                <boxGeometry args={[0.8, 1, 0.8]} />
-                <meshBasicMaterial transparent opacity={0} />
-            </mesh>
-            <primitive object={clonedScene} scale={0.9} />
-        </group>
-    )
+    return <primitive object={scene} position={[1.5, -1.0, 1.8]} scale={0.9} rotation={[0, Math.PI, 0]} />
 }
 
 function CeilingLamp({ lightsOn, onClick }: { lightsOn: boolean; onClick: (e: any) => void }) {
@@ -186,26 +168,6 @@ export const Room = () => {
     ])
     const [lightsOn, setLightsOn] = useState(true)
     const [videoPlaying, setVideoPlaying] = useState(false)
-    const [eyeRest, setEyeRest] = useState(false)
-    const [restCountdown, setRestCountdown] = useState(20)
-
-    // Eye rest logic
-    useEffect(() => {
-        if (!eyeRest) return
-
-        const timer = setInterval(() => {
-            setRestCountdown(prev => {
-                if (prev <= 1) {
-                    clearInterval(timer)
-                    setEyeRest(false)
-                    return 20
-                }
-                return prev - 1
-            })
-        }, 100) // 100ms * 20 = 2 seconds
-
-        return () => clearInterval(timer)
-    }, [eyeRest])
 
     const [snowflakes, setSnowflakes] = useState(() =>
         Array.from({ length: 100 }, () => ({
@@ -473,10 +435,7 @@ export const Room = () => {
                 {/* ===== GAMING AREA ===== */}
 
                 {/* Armchair (In front of TV) - Facing TV */}
-                <Armchair onClick={() => {
-                    setEyeRest(true)
-                    setRestCountdown(20)
-                }} />
+                <Armchair />
 
                 {/* Coffee Table */}
                 <group position={[1.5, -1.1, 0.9]}>
@@ -513,44 +472,6 @@ export const Room = () => {
                 {/* Cheetos */}
                 <Cheetos />
             </group>
-
-            {/* Eye Rest Overlay */}
-            {eyeRest && (
-                <Html fullscreen>
-                    <div style={{
-                        width: '100vw',
-                        height: '100vh',
-                        backgroundColor: 'black',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        zIndex: 1000,
-                        transition: 'opacity 0.5s ease-in-out'
-                    }}>
-                        <h1 style={{ color: '#00ffff', fontFamily: 'Segoe UI, sans-serif', fontSize: '3rem', textAlign: 'center' }}>
-                            Resting your eyes
-                        </h1>
-                        <p style={{ color: 'white', fontFamily: 'Segoe UI, sans-serif', fontSize: '1.5rem', marginTop: '20px' }}>
-                            Time remaining: {restCountdown} minutes
-                        </p>
-                        <div style={{
-                            width: '300px',
-                            height: '4px',
-                            background: 'rgba(255,255,255,0.1)',
-                            marginTop: '30px',
-                            borderRadius: '2px'
-                        }}>
-                            <div style={{
-                                width: `${(restCountdown / 20) * 100}%`,
-                                height: '100%',
-                                background: '#00ffff',
-                                transition: 'width 0.1s linear'
-                            }} />
-                        </div>
-                    </div>
-                </Html>
-            )}
         </group>
     )
 }
