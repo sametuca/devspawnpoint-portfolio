@@ -39,8 +39,8 @@ body,
 .stats-panel {
   position: fixed !important;
   top: 10px !important;
-  right: 10px !important;
-  left: auto !important;
+  left: 10px !important;
+  right: auto !important;
   opacity: 0.9 !important;
   border-radius: 8px !important;
   overflow: hidden !important;
@@ -48,7 +48,7 @@ body,
   border: 1px solid rgba(0, 255, 255, 0.2) !important;
   backdrop-filter: blur(10px) !important;
   transform: scale(1.5) !important;
-  transform-origin: top right !important;
+  transform-origin: top left !important;
 }
 
 .stats-panel canvas {

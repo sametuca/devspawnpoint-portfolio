@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import { OrbitControls, Stats } from '@react-three/drei'
 import { Scene } from './components/canvas/Scene'
 import { Room } from './components/canvas/Room'
@@ -15,11 +15,43 @@ import { ErrorBoundary } from './components/ErrorBoundary'
 import './utils/preloadModels'
 
 function App() {
+  const [showStats, setShowStats] = useState(true)
+
   return (
     <ErrorBoundary>
       <OverlayProvider>
         <MusicProvider>
           <Overlay />
+          {showStats && (
+            <button
+              onClick={() => setShowStats(false)}
+              style={{
+                position: 'fixed',
+                top: '15px',
+                left: '125px',
+                zIndex: 1000,
+                background: 'rgba(255, 0, 0, 0.7)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '50%',
+                width: '24px',
+                height: '24px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                boxShadow: '0 2px 5px rgba(0,0,0,0.5)',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 0, 0, 1)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 0, 0, 0.7)'}
+              title="Close Stats"
+            >
+              ✕
+            </button>
+          )}
           <Canvas
             shadows={false} // Shadows disabled for better performance
             camera={{ position: [0, 2.5, 3.5], fov: 50 }}
@@ -50,7 +82,7 @@ function App() {
               />
             </Suspense>
             {/* FPS and Render Stats - Development Mode */}
-            <Stats showPanel={0} className="stats-panel" />
+            {showStats && <Stats showPanel={0} className="stats-panel" />}
           </Canvas>
         </MusicProvider>
       </OverlayProvider>
